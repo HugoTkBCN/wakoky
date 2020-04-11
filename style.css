@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: #eee;
+}
+
+body {
+    font: normal 14px sans-serif;
+}
+
+#video-placeholder {
+    width: 0;
+    height: 0;
+    border: 0;
+    border: none;
+}
+
+#controls {
+    margin: 4px;
+}
+
+#controls ul {
+    list-style: none;
+}
+
+#controls ul li {
+    margin: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#time {
+    display: flex;
+    flex-direction: row;
+}
+
+#progress-bar {
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+}
+
+#controls i {
+    color: #000;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+#volume-input {
+    height: 32px;
+    width: 45px;
+}
+
+#next,
+#prev {
+    display: block;
+}
+
+.error {
+    width: 92%;
+    margin: 0px auto;
+    padding: 10px;
+    border: 1px solid #a94442;
+    color: #a94442;
+    background: #f2dede;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.playlists {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.playlist {
+    display: flex;
+    flex-direction: column;
+}
+
+#player {
+    margin: 10%;
+}
+
+.music_line {
+    display: flex;
+    flex-direction: row;
+}
+
+.add {
+    display: flex;
+    flex-direction: row;
+}
+
+.add_item {
+    padding: 5px;
+}
