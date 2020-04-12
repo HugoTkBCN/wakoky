@@ -17,7 +17,14 @@ if (mysqli_num_rows($result_playlist) > 0) {
         $playlist_name = $row_playlist["name"];
 ?>
         <div class="playlist">
-            <p><?php echo "Name: $playlist_name"; ?> </p>
+            <div class="music_line">
+                <p><?php echo "Name: $playlist_name"; ?></p>
+                <form class="remove_item" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
+                    <div>
+                        <button type="submit" name="remove_playlist">remove</button>
+                    </div>
+                </form>
+            </div>
             <?php
             $query = "SELECT * FROM links WHERE playlist_id='$playlist_id'";
             $result_link = mysqli_query($db, $query);
@@ -33,7 +40,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                         <?php
                         echo "- $name";
                         ?>
-                        <form class="add_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
+                        <form class="remove_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
                             <div>
                                 <button type="submit" name="remove_music">remove</button>
                             </div>

@@ -110,4 +110,15 @@ if (isset($_POST['remove_music'])) { // remove_a_music
     $id = $_GET['linkid'];
     $query = "DELETE FROM `links` WHERE `links`.`id` = $id";
     $result = mysqli_query($db, $query);
+    header('location: session.php');
+
+}
+
+if (isset($_POST['remove_playlist'])) { // remove_a_playlist
+    $playlist_id = $_GET['playlistid'];
+    $query = "DELETE FROM `links` WHERE `links`.`playlist_id` = $playlist_id";
+    $result = mysqli_query($db, $query);
+    $query = "DELETE FROM `playlists` WHERE `playlists`.`id` = $playlist_id";
+    $result = mysqli_query($db, $query);
+    header('location: session.php');
 }

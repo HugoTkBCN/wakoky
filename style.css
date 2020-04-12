@@ -87,16 +87,15 @@ body {
     margin: 10%;
 }
 
-.music_line {
-    display: flex;
-    flex-direction: row;
-}
-
-.add {
+.on_one_line {
     display: flex;
     flex-direction: row;
 }
 
 .add_item {
+    padding: 5px;
+}
+
+.remove_item {
     padding: 5px;
 }
