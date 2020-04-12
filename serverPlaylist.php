@@ -84,8 +84,16 @@ if (isset($_POST['add_link'])) { // add link to playlist
     if (empty($title)) {
         array_push($errors, "error");
     }
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order DESC";
+    $result = mysqli_query($db, $query);
+    $exec_order = 1;
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        if (isset($row['exec_order']))
+            $exec_order = $row['exec_order'] + 1;
+    }
     if (count($errors) == 0) {
-        $query = "INSERT INTO links (link, playlist_id, name) VALUES('$video_id', '$playlist_id', '$title')";
+        $query = "INSERT INTO links (link, playlist_id, name, exec_order) VALUES('$video_id', '$playlist_id', '$title', '$exec_order')";
         mysqli_query($db, $query);
         header('location: session.php');
     }
@@ -94,7 +102,7 @@ if (isset($_POST['add_link'])) { // add link to playlist
 if (isset($_POST['play_playlist'])) { // play_playlist
     $playlist_id = $_GET['playlistid'];
     $_SESSION['actual_playlist'] = [];
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY id ASC";
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
     $result = mysqli_query($db, $query);
     if (mysqli_num_rows($result) <= 0) {
         array_push($errors, "playlist empty");
@@ -113,10 +121,16 @@ if (isset($_POST['play_music'])) { // play_music
     $query = "SELECT * FROM links WHERE id='$link_id'";
     $result = mysqli_query($db, $query);
     $row = mysqli_fetch_assoc($result);
+    $exec_order = $row['exec_order'];
     $_SESSION['actual_playlist'][0] = $row["link"];
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) ORDER BY id ASC";
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC";
     $result = mysqli_query($db, $query);
     for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
+        $_SESSION['actual_playlist'][$i] = $row["link"];
+    };
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC";
+    $result = mysqli_query($db, $query);
+    for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
         $_SESSION['actual_playlist'][$i] = $row["link"];
     };
     header('location: session.php');
@@ -124,9 +138,24 @@ if (isset($_POST['play_music'])) { // play_music
 
 if (isset($_POST['remove_music'])) { // remove_a_music
     $id = $_GET['linkid'];
+    $query = "SELECT * FROM links WHERE id = '$id'";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    $exec_order = $row['exec_order'];
+    $playlist_id = $row['playlist_id'];
     $query = "DELETE FROM `links` WHERE `links`.`id` = $id";
     $result = mysqli_query($db, $query);
-    header('location: session.php');
+    $query = "SELECT * FROM links WHERE playlist_id = '$playlist_id' AND exec_order > $exec_order ORDER BY exec_order ASC";
+    $result = mysqli_query($db, $query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id = $row['id'];
+        $exec_order = $row['exec_order'] - 1;
+        $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id";
+        mysqli_query($db, $query);
+    }
+    if (count($errors) == 0) {
+        header('location: session.php');
+    }
 }
 
 if (isset($_POST['remove_playlist'])) { // remove_a_playlist
@@ -136,4 +165,46 @@ if (isset($_POST['remove_playlist'])) { // remove_a_playlist
     $query = "DELETE FROM `playlists` WHERE `playlists`.`id` = $playlist_id";
     $result = mysqli_query($db, $query);
     header('location: session.php');
+}
+
+if (isset($_POST['move_up'])) { // move music up in the playlist
+    $playlist_id = $_GET['playlistid'];
+    $link_id = $_GET['linkid'];
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    $exec_order = $row['exec_order'];
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND exec_order < '$exec_order' ORDER BY id DESC";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    $id_up = $row["id"];
+    $exec_order_up = $row["exec_order"];
+    $query = "UPDATE `links` SET `exec_order` = $exec_order_up WHERE `links`.`id` = $link_id";
+    $result = mysqli_query($db, $query);
+    $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_up";
+    $result = mysqli_query($db, $query);
+    if (count($errors) == 0) {
+        header('location: session.php');
+    }
+}
+
+if (isset($_POST['move_down'])) { // move the music down in the playlist
+    $playlist_id = $_GET['playlistid'];
+    $link_id = $_GET['linkid'];
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    $exec_order = $row['exec_order'];
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND exec_order > '$exec_order' ORDER BY id ASC";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    $id_down = $row["id"];
+    $exec_order_down = $row["exec_order"];
+    $query = "UPDATE `links` SET `exec_order` = $exec_order_down WHERE `links`.`id` = $link_id";
+    mysqli_query($db, $query);
+    $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_down";
+    mysqli_query($db, $query);
+    if (count($errors) == 0) {
+        header('location: session.php');
+    }
 }

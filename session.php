@@ -50,7 +50,7 @@ if (!$db) {
 			<div class="playlists">
 				<?php include('printPlaylists.php'); ?>
 			</div>
-			<div id="player">
+			<div class=player>
 				<div id="video-placeholder"></div>
 				<div id="controls">
 					<ul>
