@@ -91,7 +91,7 @@ if (isset($_POST['add_link'])) { // add link to playlist
     }
 }
 
-if (isset($_POST['play'])) { // play_playlist
+if (isset($_POST['play_playlist'])) { // play_playlist
     $playlist_id = $_GET['playlistid'];
     $_SESSION['actual_playlist'] = [];
     $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY id ASC";
@@ -106,12 +106,27 @@ if (isset($_POST['play'])) { // play_playlist
     }
 }
 
+if (isset($_POST['play_music'])) { // play_music
+    $playlist_id = $_GET['playlistid'];
+    $link_id = $_GET['linkid'];
+    $_SESSION['actual_playlist'] = [];
+    $query = "SELECT * FROM links WHERE id='$link_id'";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    $_SESSION['actual_playlist'][0] = $row["link"];
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) ORDER BY id ASC";
+    $result = mysqli_query($db, $query);
+    for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
+        $_SESSION['actual_playlist'][$i] = $row["link"];
+    };
+    header('location: session.php');
+}
+
 if (isset($_POST['remove_music'])) { // remove_a_music
     $id = $_GET['linkid'];
     $query = "DELETE FROM `links` WHERE `links`.`id` = $id";
     $result = mysqli_query($db, $query);
     header('location: session.php');
-
 }
 
 if (isset($_POST['remove_playlist'])) { // remove_a_playlist

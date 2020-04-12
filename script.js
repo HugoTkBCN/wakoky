@@ -12,6 +12,7 @@ function onYouTubeIframeAPIReady() {
         playerVars: {
             'autoplay': 1,
             'controls': 0,
+            'loop': 1,
             'disablekb': 1,
             'cc_load_policy': 1,
             'iv_load_policy': 3,

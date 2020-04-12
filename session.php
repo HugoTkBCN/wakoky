@@ -38,13 +38,13 @@ if (!$db) {
 			<p>Welcome <strong><?php echo $_SESSION['username']; ?></strong></p>
 			<p> <a href="index.php?logout='1'">logout</a> </p>
 
-			<form class="add" method="post" action="session.php">
+			<form class="add_playlist" method="post" action="session.php">
 				<div class="add_item">
 					<label>Name</label>
 					<input type="text" name="name">
 				</div>
 				<div class="add_item">
-					<button type="submit" name="add_playlist">add playlist</button>
+					<button type="submit" name="add_playlist">create playlist</button>
 				</div>
 			</form>
 			<div class="playlists">

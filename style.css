@@ -81,6 +81,9 @@ body {
 .playlist {
     display: flex;
     flex-direction: column;
+    background-color: grey;
+    padding: 1%;
+    width: 30%;
 }
 
 #player {
@@ -90,12 +93,18 @@ body {
 .on_one_line {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.add_playlist {
+    display: flex;
+    flex-direction: row;
 }
 
 .add_item {
-    padding: 5px;
+    margin: 5px;
 }
 
 .remove_item {
-    padding: 5px;
+    margin: 5px;
 }

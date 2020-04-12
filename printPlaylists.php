@@ -17,7 +17,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
         $playlist_name = $row_playlist["name"];
 ?>
         <div class="playlist">
-            <div class="music_line">
+            <div class="on_one_line">
                 <p><?php echo "Name: $playlist_name"; ?></p>
                 <form class="remove_item" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
                     <div>
@@ -30,40 +30,51 @@ if (mysqli_num_rows($result_playlist) > 0) {
             $result_link = mysqli_query($db, $query);
             ?>
             <p><?php echo "Musics: "; ?> </p>
-            <?php
-            if (mysqli_num_rows($result_link) > 0) {
-                while ($row_names = mysqli_fetch_assoc($result_link)) {
-                    $name = $row_names['name'];
-                    $link_id = $row_names['id'];
-            ?>
-                    <div class="music_line">
-                        <?php
-                        echo "- $name";
-                        ?>
-                        <form class="remove_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
-                            <div>
-                                <button type="submit" name="remove_music">remove</button>
-                            </div>
-                        </form>
-                    </div>
-            <?php
-                }
-            }
-            ?>
-            <form class="add" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
-                <div class="add_item">
-                    <label>link: </label>
-                    <input type="test" name="link">
-                </div>
-                <div class="add_item">
-                    <button type="submit" name="add_link">add music</button>
-                </div>
-            </form>
-            <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
-                <div>
-                    <button type="submit" name="play">play</button>
-                </div>
-            </form>
+            <ul>
+                <?php
+                if (mysqli_num_rows($result_link) > 0) {
+                    while ($row_names = mysqli_fetch_assoc($result_link)) {
+                        $name = $row_names['name'];
+                        $link_id = $row_names['id'];
+                ?>
+                        <li class="on_one_line">
+                            <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
+                                <div>
+                                    <button type="submit" name="play_music">play</button>
+                                </div>
+                            </form>
+                            <?php
+                            if (strlen($name) > 30) {
+                                $name = substr($name, 0, 30);
+                                $name .= "...";
+                            }
+                            echo "$name";
+                            ?>
+                            <form class="remove_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
+                                <div>
+                                    <button type="submit" name="remove_music">remove</button>
+                                </div>
+                            </form>
+                        </li>
+                    <?php
+                    }
+                    ?></ul><?php
+                        }
+                            ?>
+        <form class="on_one_line" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
+            <div class="add_item">
+                <label>link: </label>
+                <input type="test" name="link">
+            </div>
+            <div class="add_item">
+                <button type="submit" name="add_link">add music</button>
+            </div>
+        </form>
+        <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
+            <div>
+                <button type="submit" name="play_playlist">play</button>
+            </div>
+        </form>
         </div> <?php
             }
         }
