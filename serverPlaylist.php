@@ -2,7 +2,7 @@
 session_start();
 
 // connect to database
-$db = mysqli_connect('localhost', 'root', '05092000', 'wakoky');
+$db = mysqli_connect('10.97.160.3', 'root', '"K*d0e=a', 'wakoky');
 
 if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
@@ -43,9 +43,10 @@ if (isset($_POST['add_playlist'])) {
 
 function youtube_title($id)
 {
+    $api_key = "AIzaSyB96N_CX-mutJ1SdPcs8QoeoBz2YQJzieg";
     // $id = 'YOUTUBE_ID';
     // returns a single line of JSON that contains the video title. Not a giant request.
-    $videoTitle = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id=" . $id . "&key=AIzaSyA6VdFjkakmybwzZ5oZtBwqLnTGXu4o7SU&fields=items(id,snippet(title),statistics)&part=snippet,statistics");
+    $videoTitle = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id=" . $id . "&key=$api_key&fields=items(id,snippet(title),statistics)&part=snippet,statistics");
     // despite @ suppress, it will be false if it fails
     if ($videoTitle) {
         $json = json_decode($videoTitle, true);
