@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : sam. 11 avr. 2020 à 18:53
+-- Généré le : lun. 13 avr. 2020 à 00:12
 -- Version du serveur :  10.4.12-MariaDB
 -- Version de PHP : 7.4.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `registration`
+-- Base de données : `wakoky`
 --
 
 -- --------------------------------------------------------
@@ -31,17 +31,27 @@ CREATE TABLE `links` (
   `playlist_id` int(11) NOT NULL,
   `link` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exec_order` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `links`
 --
 
-INSERT INTO `links` (`playlist_id`, `link`, `id`, `name`) VALUES
-(13, 'gO_8TXhU90g', 36, 'Travis Scott - SICKO MODE ft. Drake [9D AUDIO | NOT 8D] 🎧'),
-(13, '5BgLoQ1NnJc', 37, 'XXXTENTACION - School Shooters (Official Video) (feat. Lil Wayne)'),
-(14, 'rzJBkSBx-Uk', 39, '🎧 XXXTENTACION - Save Me (DareveL Remix) (8D AUDIO) 🎧');
+INSERT INTO `links` (`playlist_id`, `link`, `id`, `name`, `exec_order`) VALUES
+(15, 'rzJBkSBx-Uk', 56, '🎧 XXXTENTACION - Save Me (DareveL Remix) (8D AUDIO) 🎧', 1),
+(15, 'db7_icvfxSE', 68, 'Travis Scott - HIGHEST IN THE ROOM | 8D SOUNDS', 2),
+(15, 'rzJBkSBx-Uk', 71, '🎧 XXXTENTACION - Save Me (DareveL Remix) (8D AUDIO) 🎧', 3),
+(15, 'db7_icvfxSE', 72, 'Travis Scott - HIGHEST IN THE ROOM | 8D SOUNDS', 4),
+(15, 'rzJBkSBx-Uk', 73, '🎧 XXXTENTACION - Save Me (DareveL Remix) (8D AUDIO) 🎧', 5),
+(19, '5BgLoQ1NnJc', 74, 'XXXTENTACION - School Shooters (Official Video) (feat. Lil Wayne)', 1),
+(19, 'db7_icvfxSE', 75, 'Travis Scott - HIGHEST IN THE ROOM | 8D SOUNDS', 2),
+(19, 'rzJBkSBx-Uk', 76, '🎧 XXXTENTACION - Save Me (DareveL Remix) (8D AUDIO) 🎧', 3),
+(19, 'rzJBkSBx-Uk', 77, '🎧 XXXTENTACION - Save Me (DareveL Remix) (8D AUDIO) 🎧', 4),
+(19, 'db7_icvfxSE', 78, 'Travis Scott - HIGHEST IN THE ROOM | 8D SOUNDS', 5),
+(19, 'db7_icvfxSE', 79, 'Travis Scott - HIGHEST IN THE ROOM | 8D SOUNDS', 6),
+(20, '5BgLoQ1NnJc', 80, 'XXXTENTACION - School Shooters (Official Video) (feat. Lil Wayne)', 1);
 
 -- --------------------------------------------------------
 
@@ -60,8 +70,19 @@ CREATE TABLE `playlists` (
 --
 
 INSERT INTO `playlists` (`id`, `name`, `user_id`) VALUES
-(13, 'myPlaylist', 1),
-(14, 'ma playliste de bg', 8);
+(14, 'ma playliste de bg', 8),
+(15, 'myPlaylist', 1),
+(19, 'more bitch', 1),
+(20, 'la', 1),
+(22, 'f', 1),
+(23, '1', 1),
+(24, '2', 1),
+(25, '5', 1),
+(26, 'ls', 1),
+(27, '3', 1),
+(30, 'rap', 1),
+(31, '53', 1),
+(32, 'gh', 1);
 
 -- --------------------------------------------------------
 
@@ -115,13 +136,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `links`
 --
 ALTER TABLE `links`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT pour la table `playlists`
 --
 ALTER TABLE `playlists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT pour la table `users`
