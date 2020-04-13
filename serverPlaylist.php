@@ -3,6 +3,9 @@ session_start();
 
 // connect to database
 $db = mysqli_connect('localhost', 'root', '"K*d0e=a', 'wakoky');
+if (!$db) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
 if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
