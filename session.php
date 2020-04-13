@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 $errors = array();
 
 // connect to database
-$db = mysqli_connect('localhost', 'root', '"K*d0e=a', 'wakoky');
+$db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
 
 if (!$db) {
 	die("Connection failed: " . mysqli_connect_error());
