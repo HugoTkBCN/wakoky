@@ -24,6 +24,7 @@ if (!$db) {
 <head>
 	<title>Session</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="session.css">
 	<link rel="icon" type="image/ico" href="logo_zoom.png" />
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">

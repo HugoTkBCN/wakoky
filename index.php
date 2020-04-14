@@ -19,6 +19,7 @@ if (isset($_GET['logout'])) {
 <head>
 	<title>Wakoky</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="session.css">
 	<link rel="icon" type="image/ico" href="logo_zoom.png" />
 </head>
 
