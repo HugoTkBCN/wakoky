@@ -29,9 +29,17 @@ function onYouTubeIframeAPIReady() {
         },
         events: {
             onReady: initialize,
-            onError: checkError
+            onError: checkError,
+            onStateChange: onPlayerStateChange
+
         }
     });
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+        alert("end");
+    }
 }
 
 function checkError() {
@@ -144,7 +152,11 @@ $('.thumbnail').on('click', function() {
     var url = $(this).attr('data-video-id');
 
     player.cueVideoById(url);
+    alert("la");
 
+});
+$('#iframe').on('load', function() {
+    alert('frame has (re)loaded ');
 });
 
 

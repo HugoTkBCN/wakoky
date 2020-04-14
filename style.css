@@ -21,10 +21,10 @@ body {
 .header {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     width: 100%;
-    padding: 1% 0 0.5% 0;
+    padding: 0.5% 1% 0.5% 1%;
 }
 
 .logout {
@@ -101,7 +101,7 @@ body {
         height: 10px;
         cursor: ew-resize;
         background: #BB00CF;
-        box-shadow: -80px 0 0 80px #BB00CF;
+        box-shadow: -400px 0 0 400px #BB00CF;
     }
 }
 

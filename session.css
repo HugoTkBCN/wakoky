@@ -29,7 +29,7 @@ body {
     height: 600px;
     background-color: #262626;
     border-radius: 10px;
-    margin: 0% 1% 1% 1%;
+    margin: 0% 1% 0.5% 1%;
 }
 
 .playlists::-webkit-scrollbar-track {
