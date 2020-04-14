@@ -91,7 +91,8 @@ if (mysqli_num_rows($result_playlist) > 0) {
             </form>
             <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
                 <div>
-                    <button type="submit" name="play_playlist">play</button>
+                    <input type="hidden" name="play_playlist"></input>
+                    <input class="addLink" type="image" src="play.png" name="play_playlist" width="40" height="40"></input>
                 </div>
             </form>
         </li> <?php

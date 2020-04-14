@@ -19,7 +19,7 @@ if (!isset($_SESSION['username'])) {
                 <div class="add_item">
                     <input class="inputPlaylistName" type="text" name="name">
                     <input type="hidden" name="add_playlist"></input>
-                    <input class="addPlaylist" type="image" src="add.png" name="add_playlist" width="50" height="50"></input>
+                    <input class="addPlaylist" type="image" src="add.png" name="add_playlist" width="40" height="40"></input>
                 </div>
             </form>
             <a href="index.php"><img class="logo" src="logo.png" height="150" width="150"></a>
