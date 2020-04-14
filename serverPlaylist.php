@@ -38,6 +38,8 @@ if (isset($_POST['add_playlist'])) {
         mysqli_query($db, $query);
         header('location: index.php');
     }
+    header('location: index.php');
+
 }
 
 function youtube_title($id)
@@ -54,6 +56,7 @@ function youtube_title($id)
     } else {
         return false;
     }
+
 }
 
 if (isset($_POST['add_link'])) { // add link to playlist
@@ -97,6 +100,8 @@ if (isset($_POST['add_link'])) { // add link to playlist
         mysqli_query($db, $query);
         header('location: index.php');
     }
+    header('location: index.php');
+
 }
 
 if (isset($_POST['play_playlist'])) { // play_playlist
@@ -112,6 +117,8 @@ if (isset($_POST['play_playlist'])) { // play_playlist
         };
         header('location: index.php');
     }
+    header('location: index.php');
+
 }
 
 if (isset($_POST['play_music'])) { // play_music
