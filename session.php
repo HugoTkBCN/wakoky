@@ -17,38 +17,19 @@ if (!$db) {
 ?>
 <?php include('serverPlaylist.php') ?>
 <?php include('errors.php'); ?>
+<div>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>Session</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" type="text/css" href="session.css">
-	<link rel="icon" type="image/ico" href="logo_zoom.png" />
-
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
-	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/tomorrow.min.css">
-</head>
-
-<body>
-	<div>
-
-		<?php if (isset($_SESSION['username'])) : ?>
-			<div class="playlists">
-				<form class="add_playlist" method="post" action="session.php">
-					<div class="add_item">
-						<input type="text" name="name">
-					</div>
-					<div class="add_item">
-						<button type="submit" name="add_playlist">create playlist</button>
-					</div>
-				</form>
-				<?php include('printPlaylists.php'); ?>
-			</div>
-		<?php endif ?>
-	</div>
-</body>
-
-</html>
+	<?php if (isset($_SESSION['username'])) : ?>
+		<div class="playlists">
+			<form class="add_playlist" method="post" action="session.php">
+				<div class="add_item">
+					<input type="text" name="name">
+				</div>
+				<div class="add_item">
+					<button type="submit" name="add_playlist">create playlist</button>
+				</div>
+			</form>
+			<?php include('printPlaylists.php'); ?>
+		</div>
+	<?php endif ?>
+</div>
