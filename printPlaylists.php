@@ -20,12 +20,15 @@ if (mysqli_num_rows($result_playlist) > 0) {
 ?>
         <li class="playlist">
             <div class="on_one_line">
-                <p><?php echo "Name: $playlist_name"; ?></p>
                 <form class="remove_item" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
                     <div>
-                        <button type="submit" name="remove_playlist">remove</button>
+                        <input type="hidden" name="remove_playlist"></input>
+                        <input class="removeLink" type="image" src="remove.png" name="remove_playlist" width="40" height="40"></input>
                     </div>
                 </form>
+                <h3><?php echo "$playlist_name"; ?></h3>
+                <div></div>
+                <div></div>
             </div>
             <?php
             $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order";
@@ -41,7 +44,8 @@ if (mysqli_num_rows($result_playlist) > 0) {
                         <div class="on_one_line">
                             <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                 <div>
-                                    <button type="submit" name="play_music">play</button>
+                                    <input type="hidden" name="play_music"></input>
+                                    <input class="playLink" type="image" src="play.png" name="play_music" width="30" height="30"></input>
                                 </div>
                             </form>
                             <?php
@@ -51,35 +55,38 @@ if (mysqli_num_rows($result_playlist) > 0) {
                             }
                             echo "$name";
                             ?>
-                            <form class="remove_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
-                                <div>
-                                    <button type="submit" name="remove_music">remove</button>
-                                </div>
-                            </form>
-                            <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
-                                <div>
-                                    <button type="submit" name="move_up">up</button>
-                                </div>
-                            </form>
-                            <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
-                                <div>
-                                    <button type="submit" name="move_down">down</button>
-                                </div>
-                            </form>
+                            <div class="option_link">
+                                <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
+                                    <div>
+                                        <input type="hidden" name="move_up"></input>
+                                        <input class="moveUp" type="image" src="up.png" name="move_up" width="30" height="30"></input>
+                                    </div>
+                                </form>
+                                <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
+                                    <div>
+                                        <input type="hidden" name="move_down"></input>
+                                        <input class="moveDown" type="image" src="down.png" name="move_down" width="30" height="30"></input>
+                                    </div>
+                                </form>
+                                <form class="remove_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
+                                    <div>
+                                        <input type="hidden" name="remove_music"></input>
+                                        <input class="removeLink" type="image" src="remove.png" name="remove_music" width="30" height="30"></input>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                         <?php
                     }
                         ?><?php
-                            }
-                                ?>
+                        }
+                            ?>
             </div>
             <form class="on_one_line" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
+                <input class="inputLink" type="test" name="link">
                 <div class="add_item">
-                    <label>link: </label>
-                    <input type="test" name="link">
-                </div>
-                <div class="add_item">
-                    <button type="submit" name="add_link">add music</button>
+                    <input type="hidden" name="add_link"></input>
+                    <input class="addLink" type="image" src="add.png" name="add_link" width="40" height="40"></input>
                 </div>
             </form>
             <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">

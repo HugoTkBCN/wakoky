@@ -12,10 +12,18 @@ if (!isset($_SESSION['username'])) {
     <?php if (isset($_SESSION['success'])) : ?>
         <div class="header">
             <a href="index.php?logout='1'">
-                <img src="exit.png" height="25" width="30"></img>
+                <img class="logout" src="logout.png" height="25" width="25"></img>
             </a>
-            <a href="index.php"><img src="logo.png" height="150" width="150"></a>
-            <div></div>
+            <form class="add_playlist" method="post" action="serverPlaylist.php">
+                <h2 for="name">Add New Playlist</h2>
+                <div class="add_item">
+                    <input class="inputPlaylistName" type="text" name="name">
+                    <input type="hidden" name="add_playlist"></input>
+                    <input class="addPlaylist" type="image" src="add.png" name="add_playlist" width="50" height="50"></input>
+                </div>
+            </form>
+            <a href="index.php"><img class="logo" src="logo.png" height="150" width="150"></a>
+            <div class="blank_header"></div>
         </div>
         <div class="content">
             <?php include('session.php'); ?>

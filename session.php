@@ -21,14 +21,6 @@ if (!$db) {
 
 	<?php if (isset($_SESSION['username'])) : ?>
 		<div class="playlists">
-			<form class="add_playlist" method="post" action="session.php">
-				<div class="add_item">
-					<input type="text" name="name">
-				</div>
-				<div class="add_item">
-					<button type="submit" name="add_playlist">create playlist</button>
-				</div>
-			</form>
 			<?php include('printPlaylists.php'); ?>
 		</div>
 	<?php endif ?>
