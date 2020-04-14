@@ -7,10 +7,6 @@ if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-if (!$db) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
 //  create playlist
 if (isset($_POST['add_playlist'])) {
     $errors = array();
@@ -40,7 +36,7 @@ if (isset($_POST['add_playlist'])) {
         $query = "INSERT INTO playlists (name, user_id) 
 					  VALUES('$name', '$user_id')";
         mysqli_query($db, $query);
-        header('location: session.php');
+        header('location: index.php');
     }
 }
 
@@ -83,7 +79,7 @@ if (isset($_POST['add_link'])) { // add link to playlist
         $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
     $video_id = explode("&", $video_id[1]); // Deleting any other params
     $video_id = $video_id[0];
-    $playlist_id = $_GET['playlistid'];
+    $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $title = youtube_title($video_id);
     if (empty($title)) {
         array_push($errors, "error");
@@ -99,12 +95,12 @@ if (isset($_POST['add_link'])) { // add link to playlist
     if (count($errors) == 0) {
         $query = "INSERT INTO links (link, playlist_id, name, exec_order) VALUES('$video_id', '$playlist_id', '$title', '$exec_order')";
         mysqli_query($db, $query);
-        header('location: session.php');
+        header('location: index.php');
     }
 }
 
 if (isset($_POST['play_playlist'])) { // play_playlist
-    $playlist_id = $_GET['playlistid'];
+    $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $_SESSION['actual_playlist'] = [];
     $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
     $result = mysqli_query($db, $query);
@@ -114,13 +110,13 @@ if (isset($_POST['play_playlist'])) { // play_playlist
         for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
             $_SESSION['actual_playlist'][$i] = $row["link"];
         };
-        header('location: session.php');
+        header('location: index.php');
     }
 }
 
 if (isset($_POST['play_music'])) { // play_music
-    $playlist_id = $_GET['playlistid'];
-    $link_id = $_GET['linkid'];
+    $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
+    $link_id =  mysqli_real_escape_string($db, $_GET['linkid']);
     $_SESSION['actual_playlist'] = [];
     $query = "SELECT * FROM links WHERE id='$link_id'";
     $result = mysqli_query($db, $query);
@@ -137,11 +133,11 @@ if (isset($_POST['play_music'])) { // play_music
     for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
         $_SESSION['actual_playlist'][$i] = $row["link"];
     };
-    header('location: session.php');
+    header('location: index.php');
 }
 
 if (isset($_POST['remove_music'])) { // remove_a_music
-    $id = $_GET['linkid'];
+    $id =  mysqli_real_escape_string($db, $_GET['linkid']);
     $query = "SELECT * FROM links WHERE id = '$id'";
     $result = mysqli_query($db, $query);
     $row = mysqli_fetch_assoc($result);
@@ -158,22 +154,22 @@ if (isset($_POST['remove_music'])) { // remove_a_music
         mysqli_query($db, $query);
     }
     if (count($errors) == 0) {
-        header('location: session.php');
+        header('location: index.php');
     }
 }
 
 if (isset($_POST['remove_playlist'])) { // remove_a_playlist
-    $playlist_id = $_GET['playlistid'];
+    $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $query = "DELETE FROM `links` WHERE `links`.`playlist_id` = $playlist_id";
     $result = mysqli_query($db, $query);
     $query = "DELETE FROM `playlists` WHERE `playlists`.`id` = $playlist_id";
     $result = mysqli_query($db, $query);
-    header('location: session.php');
+    header('location: index.php');
 }
 
 if (isset($_POST['move_up'])) { // move music up in the playlist
-    $playlist_id = $_GET['playlistid'];
-    $link_id = $_GET['linkid'];
+    $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
+    $link_id =  mysqli_real_escape_string($db, $_GET['linkid']);
     $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'";
     $result = mysqli_query($db, $query);
     $row = mysqli_fetch_assoc($result);
@@ -188,13 +184,13 @@ if (isset($_POST['move_up'])) { // move music up in the playlist
     $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_up";
     $result = mysqli_query($db, $query);
     if (count($errors) == 0) {
-        header('location: session.php');
+        header('location: index.php');
     }
 }
 
 if (isset($_POST['move_down'])) { // move the music down in the playlist
-    $playlist_id = $_GET['playlistid'];
-    $link_id = $_GET['linkid'];
+    $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
+    $link_id =  mysqli_real_escape_string($db, $_GET['linkid']);
     $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'";
     $result = mysqli_query($db, $query);
     $row = mysqli_fetch_assoc($result);
@@ -209,6 +205,6 @@ if (isset($_POST['move_down'])) { // move the music down in the playlist
     $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_down";
     mysqli_query($db, $query);
     if (count($errors) == 0) {
-        header('location: session.php');
+        header('location: index.php');
     }
 }

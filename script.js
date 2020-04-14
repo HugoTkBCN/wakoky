@@ -1,5 +1,6 @@
 var player,
     time_update_interval = 0;
+var playing = -1;
 
 function onYouTubeIframeAPIReady() {
     firstVideo = myPLaylist[0];
@@ -53,6 +54,8 @@ function initialize() {
         updateProgressBar();
     }, 1000);
 
+    playing = 1;
+    player.setPlaybackQuality("small");
 
     $('#volume-input').val(Math.round(player.getVolume()));
 }
@@ -89,13 +92,17 @@ $('#progress-bar').on('mouseup touchend', function(e) {
 
 // Playback
 
-$('#play').on('click', function() {
-    player.playVideo();
-});
-
-
-$('#pause').on('click', function() {
-    player.pauseVideo();
+$('#play_pause').on('click', function() {
+    var play_pause = $(this);
+    if (playing == 0) {
+        player.playVideo();
+        playing = 1;
+        play_pause.text('pause');
+    } else if (playing == 1) {
+        player.pauseVideo();
+        playing = 0;
+        play_pause.text('play_arrow');
+    }
 });
 
 

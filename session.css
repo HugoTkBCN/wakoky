@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font: normal 100% sans-serif;
+}
+
+.error {
+    width: 92%;
+    margin: 0px auto;
+    padding: 10px;
+    border: 1px solid #a94442;
+    color: #a94442;
+    background: #f2dede;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.playlists {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 600px;
+    background-color: #262626;
+    border-radius: 10px;
+    margin: 0% 1% 1% 1%;
+}
+
+.playlists::-webkit-scrollbar-track {
+    border: 1px solid black;
+    background-color: black;
+}
+
+.playlists::-webkit-scrollbar {
+    width: 10px;
+    background-color: black;
+}
+
+.playlists::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #BB00CF;
+    background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent)
+}
+
+.playlist {
+    display: flex;
+    flex-direction: column;
+    background-color: grey;
+    padding: 1%;
+    margin: 1%;
+    width: 500px;
+    max-height: 50%;
+}
+
+.music_list::-webkit-scrollbar-track {
+    border: 1px solid black;
+    background-color: black;
+}
+
+.music_list::-webkit-scrollbar {
+    width: 10px;
+    background-color: black;
+}
+
+.music_list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #BB00CF;
+    background-image: -webkit-linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4) 50%, transparent, transparent)
+}
+
+.music_list {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    max-height: 150px;
+    padding: 1%;
+}
+
+.on_one_line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.add_playlist {
+    display: flex;
+    flex-direction: row;
+    margin: 1%;
+    background-color: grey;
+    border-radius: 10px;
+}
+
+.add_item {
+    margin: 1%;
+    color: white;
+}
+
+.remove_item {
+    margin: 1%;
+}
