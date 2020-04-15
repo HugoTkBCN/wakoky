@@ -22,7 +22,7 @@ if (!isset($_SESSION['username'])) {
         </div>
         <div class="footer" id="myFooter">
             <div class="info_music">
-                <p>XXXTENTACION - School Shooters...</p>
+                <div id="title"></div>
             </div>
             <div id="player">
                 <ul>

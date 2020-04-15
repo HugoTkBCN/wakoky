@@ -161,3 +161,7 @@
 .info_playlists {
     padding: 1%;
 }
+
+#title {
+    font-size: 15px;
+}

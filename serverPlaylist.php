@@ -144,8 +144,14 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_p
         header('location: index.php');
     } else {
         for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
+            if ($i == 0)
+                $link_id = $row['id'];
             $_SESSION['actual_playlist'][$i] = $row["link"];
         };
+        setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
+        setcookie('link_id', $link_id, time() + (86400 * 30), "/");
+        setcookie('loaded', '1', time() + (86400 * 30), "/");
+        setcookie('time', '0', time() + (86400 * 30), "/");
         header('location: index.php');
     }
 }
