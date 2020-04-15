@@ -13,24 +13,12 @@ function onYouTubeIframeAPIReady() {
         videoId: firstVideo,
         playerVars: {
             'autoplay': 1,
-            'controls': 0,
             'loop': 1,
-            'disablekb': 1,
-            'cc_load_policy': 1,
-            'iv_load_policy': 3,
-            'modestbranding': 1,
-            'playsinline': 1,
-            'enablecastapi': 0,
             'rel': 0,
-            'showinfo': 0,
-            'html5': 1,
-            'forcenewui': 1,
-            'enablejsapi': 1,
             playlist: playlist
         },
         events: {
             onReady: initialize,
-            onError: checkError,
             onStateChange: onPlayerStateChange
 
         }
@@ -65,10 +53,6 @@ function onPlayerStateChange(event) {
             document.getElementById("title").innerHTML = title;
         });
     }
-}
-
-function checkError() {
-    alert("Can not read this musique");
 }
 
 function initialize() {
@@ -148,7 +132,6 @@ $('#play_pause').on('click', function () {
     }
 });
 
-
 // Sound volume
 
 
@@ -175,7 +158,7 @@ $('#next').on('click', function () {
     player.nextVideo();
     var order = parseInt(accessCookie("order"));
     document.cookie = "order=" + order;
-    if (order + 1 > parseInt(accessCookie("numberMusic")) - 1)
+    if (order + 1 > parseInt(accessCookie("numberMusic")))
         order = 1;
     else
         order += 1;
@@ -194,7 +177,7 @@ $('#prev').on('click', function () {
     player.previousVideo();
     var order = parseInt(accessCookie("order"));
     if (order - 1 < 1)
-        order = parseInt(accessCookie("numberMusic")) - 1;
+        order = parseInt(accessCookie("numberMusic"));
     else
         order -= 1;
     document.cookie = "order=" + order;
