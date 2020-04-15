@@ -52,7 +52,6 @@ function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
         var order = parseInt(accessCookie("order")) + 1;
         document.cookie = "order=" + order;
-        alert("end");
     }
 }
 
@@ -100,14 +99,6 @@ function updateTimerDisplay() {
 function updateProgressBar() {
     // Update the value of our progress bar accordingly.
     $('#progress-bar').val((player.getCurrentTime() / player.getDuration()) * 100);
-}
-
-
-function setToTime(time) {
-    alert("yo");
-    player.seekTo(parseInt(time));
-    updateProgressBar();
-    updateTimerDisplay();
 }
 
 // Progress bar
@@ -185,9 +176,6 @@ $('.thumbnail').on('click', function () {
     var url = $(this).attr('data-video-id');
 
     player.cueVideoById(url);
-});
-$('#iframe').on('load', function () {
-    alert('frame has (re)loaded ');
 });
 
 
