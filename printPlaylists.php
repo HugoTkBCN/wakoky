@@ -64,7 +64,7 @@ if (!$db) {
     </div>
 </div>
 <?php
-$actual_playlist_id = $_SESSION['actual_playlist_id'];
+$actual_playlist_id = $_COOKIE['playlist_id'];
 $query = "SELECT * FROM playlists WHERE user_id='$user_id' AND id='$actual_playlist_id'";
 $result_playlist = mysqli_query($db, $query);
 if (mysqli_num_rows($result_playlist) > 0) {

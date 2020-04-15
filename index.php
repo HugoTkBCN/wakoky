@@ -9,6 +9,10 @@ if (!isset($_SESSION['username'])) {
 if (isset($_GET['logout'])) {
 	session_destroy();
 	unset($_SESSION['username']);
+	foreach ($_COOKIE as $cookie_name => $cookie_value) {
+		unset($_COOKIE[$cookie_name]);
+		setcookie($cookie_name, '', time() - 4200, '/');
+	}
 	header("location: login.php");
 }
 

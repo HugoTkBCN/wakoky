@@ -133,7 +133,7 @@ if (isset($_POST['add_link'])) { // add link to playlist
 if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_playlist
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $_SESSION['actual_playlist'] = [];
-    $_SESSION['actual_playlist_id'] = $playlist_id;
+    $_COOKIE['playlist_id'] = $playlist_id;
     $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
     $result = mysqli_query($db, $query);
     if (mysqli_num_rows($result) <= 0) {
