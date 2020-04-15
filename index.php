@@ -12,6 +12,13 @@ if (isset($_GET['logout'])) {
 	header("location: login.php");
 }
 
+if (isset($_GET['error'])) {
+?>
+	<script>
+		alert("<?php echo htmlspecialchars($_GET['error'], ENT_QUOTES); ?>")
+	</script>
+<?php
+}
 ?>
 <!DOCTYPE html>
 <html>

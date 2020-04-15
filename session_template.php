@@ -14,16 +14,8 @@ if (!isset($_SESSION['username'])) {
             <a href="index.php?logout='1'">
                 <img class="logout" src="logout.png" height="25" width="25"></img>
             </a>
-            <form class="add_playlist" method="post" action="serverPlaylist.php">
-                <h2 for="name">Add New Playlist</h2>
-                <div class="add_item">
-                    <input class="inputPlaylistName" type="text" name="name">
-                    <input type="hidden" name="add_playlist"></input>
-                    <input class="addPlaylist" type="image" src="add.png" name="add_playlist" width="40" height="40"></input>
-                </div>
-            </form>
-            <a href="index.php"><img class="logo" src="logo.png" height="150" width="150"></a>
-            <div class="blank_header"></div>
+            <a href="index.php"><img class="logo" src="logo.png" height="200" width="200"></a>
+            <div class="blank"></div>
         </div>
         <div class="content">
             <?php include('session.php'); ?>
