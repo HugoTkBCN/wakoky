@@ -3,6 +3,7 @@ var player,
 var playing = -1;
 
 function onYouTubeIframeAPIReady() {
+    document.cookie = "numberMusic=" + myPLaylist.length;
     firstVideo = myPLaylist[0];
     myPLaylist.shift();
     myPLaylist = myPLaylist.join(",");
@@ -36,8 +37,21 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
+function accessCookie(cookieName) {
+    var name = cookieName + "=";
+    var allCookieArray = document.cookie.split(';');
+    for (var i = 0; i < allCookieArray.length; i++) {
+        var temp = allCookieArray[i].trim();
+        if (temp.indexOf(name) == 0)
+            return temp.substring(name.length, temp.length);
+    }
+    return "";
+}
+
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
+        var order = parseInt(accessCookie("order")) + 1;
+        document.cookie = "order=" + order;
         alert("end");
     }
 }
@@ -49,6 +63,7 @@ function checkError() {
 function initialize() {
 
     // Update the controls on load
+    player.seekTo(parseInt(accessCookie('time')));
     updateTimerDisplay();
     updateProgressBar();
 
@@ -57,13 +72,15 @@ function initialize() {
 
     // Start interval to update elapsed time display and
     // the elapsed part of the progress bar every second.
-    time_update_interval = setInterval(function() {
+    time_update_interval = setInterval(function () {
         updateTimerDisplay();
         updateProgressBar();
     }, 1000);
 
+    document.cookie = "playing=1";
     playing = 1;
     player.setPlaybackQuality("small");
+    document.cookie = "order=1";
 
     $('#volume-input').val(Math.round(player.getVolume()));
 }
@@ -74,6 +91,8 @@ function updateTimerDisplay() {
     // Update current time text display.
     $('#current-time').text(formatTime(player.getCurrentTime()));
     $('#duration').text(formatTime(player.getDuration()));
+    document.cookie = "loaded=0";
+    document.cookie = "time=" + player.getCurrentTime();
 }
 
 
@@ -84,9 +103,16 @@ function updateProgressBar() {
 }
 
 
+function setToTime(time) {
+    alert("yo");
+    player.seekTo(parseInt(time));
+    updateProgressBar();
+    updateTimerDisplay();
+}
+
 // Progress bar
 
-$('#progress-bar').on('mouseup touchend', function(e) {
+$('#progress-bar').on('mouseup touchend', function (e) {
 
     // Calculate the new time for the video.
     // new time in seconds = total duration in seconds * ( value of range input / 100 )
@@ -94,13 +120,12 @@ $('#progress-bar').on('mouseup touchend', function(e) {
 
     // Skip video to new time.
     player.seekTo(newTime);
-
 });
 
 
 // Playback
 
-$('#play_pause').on('click', function() {
+$('#play_pause').on('click', function () {
     var play_pause = $(this);
     if (playing == 0) {
         player.playVideo();
@@ -117,7 +142,7 @@ $('#play_pause').on('click', function() {
 // Sound volume
 
 
-$('#mute-toggle').on('click', function() {
+$('#mute-toggle').on('click', function () {
     var mute_toggle = $(this);
 
     if (player.isMuted()) {
@@ -129,33 +154,39 @@ $('#mute-toggle').on('click', function() {
     }
 });
 
-$('#volume-input').on('change', function() {
+$('#volume-input').on('change', function () {
     player.setVolume($(this).val());
 });
 
 
 // Playlist
 
-$('#next').on('click', function() {
-    player.nextVideo()
+$('#next').on('click', function () {
+    player.nextVideo();
+    var order = parseInt(accessCookie("order")) + 1;
+    document.cookie = "order=" + order;
 });
 
-$('#prev').on('click', function() {
-    player.previousVideo()
+$('#prev').on('click', function () {
+    player.previousVideo();
+    var order = parseInt(accessCookie("order"));
+    if (order - 1 < 1)
+        order = parseInt(accessCookie("numberMusic")) - 1;
+    else
+        order -= 1;
+    document.cookie = "order=" + order;
 });
 
 
 // Load video
 
-$('.thumbnail').on('click', function() {
+$('.thumbnail').on('click', function () {
 
     var url = $(this).attr('data-video-id');
 
     player.cueVideoById(url);
-    alert("la");
-
 });
-$('#iframe').on('load', function() {
+$('#iframe').on('load', function () {
     alert('frame has (re)loaded ');
 });
 
@@ -174,6 +205,6 @@ function formatTime(time) {
 }
 
 
-$('pre code').each(function(i, block) {
+$('pre code').each(function (i, block) {
     hljs.highlightBlock(block);
 });

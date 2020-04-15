@@ -7,6 +7,48 @@ if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+function reload_playlist()
+{
+    $db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
+    if (!$db) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    $playlist_id = $_COOKIE['playlist_id'];
+    $link_id = $_COOKIE['link_id'];
+
+    $query = "SELECT * FROM links WHERE id='$link_id'";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    $exec_order = $row['exec_order'];
+    echo "<br>";
+    echo $exec_order;
+    $tmp = [];
+    $tmp[0] = $link_id;
+
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC";
+    $result = mysqli_query($db, $query);
+    for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
+        $tmp[$i] = $row["id"];
+    };
+    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC";
+    $result = mysqli_query($db, $query);
+    for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
+        $tmp[$i] = $row["id"];
+    };
+    $link_id = $tmp[$_COOKIE['order'] - 1];
+    echo "<br>";
+    echo $link_id;
+?>
+    <form method="post" action="index.php?at_time=1&playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>" id="load">
+        <input type="hidden" name="play_music"></input>
+    </form>
+    <script type="text/javascript">
+        document.getElementById('load').submit();
+    </script>
+<?php
+    header("index.php");
+}
+
 //  create playlist
 if (isset($_POST['add_playlist'])) {
     // receive all input values from the form
@@ -108,7 +150,7 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_p
     }
 }
 
-if (isset($_POST['play_music'])) { // play_music
+if (isset($_POST['play_music']) || isset($_GET['play_music'])) { // play_music
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $link_id =  mysqli_real_escape_string($db, $_GET['linkid']);
     $_SESSION['actual_playlist'] = [];
@@ -127,6 +169,12 @@ if (isset($_POST['play_music'])) { // play_music
     for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
         $_SESSION['actual_playlist'][$i] = $row["link"];
     };
+    setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
+    setcookie('link_id', $link_id, time() + (86400 * 30), "/");
+    setcookie('loaded', '1', time() + (86400 * 30), "/");
+    if (!isset($_GET['at_time'])) {
+        setcookie('time', '0', time() + (86400 * 30), "/");
+    }
     header('location: index.php');
 }
 

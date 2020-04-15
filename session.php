@@ -6,7 +6,6 @@ if (!isset($_SESSION['username'])) {
 	header('location: login.php');
 }
 ?>
-<?php include('serverPlaylist.php') ?>
 <div>
 
 	<?php if (isset($_SESSION['username'])) : ?>

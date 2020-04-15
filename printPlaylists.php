@@ -43,14 +43,14 @@ if (!$db) {
                     $playlist_name = $row_playlist["name"];
             ?>
                     <div class="on_one_line">
-                        <form class="remove_item" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
+                        <form class="remove_item" method="post" action="index.php?playlistid=<?php echo $playlist_id ?>">
                             <div>
                                 <input type="hidden" name="remove_playlist"></input>
                                 <input class="removeLink" type="image" src="assets/remove.png" name="remove_playlist" width="20" height="20"></input>
                             </div>
                         </form>
-                        <a class="play_playlist" href="session.php?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
-                        <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
+                        <a class="play_playlist" href="index.php?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
+                        <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>">
                             <div>
                                 <input type="hidden" name="play_playlist"></input>
                                 <input class="addLink" type="image" src="assets/play.png" width="30" height="30"></input>
@@ -74,7 +74,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
 ?>
         <li class="playlist">
             <div class="on_one_line">
-                <a class="play_playlist" href="session.php?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
+                <a class="play_playlist" href="index.php?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
             </div>
             <?php
             $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
@@ -88,7 +88,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                         $link_id = $row_names['id'];
                 ?>
                         <div class="on_one_line">
-                            <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
+                            <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                 <div>
                                     <input type="hidden" name="play_music"></input>
                                     <input class="playLink" type="image" src="assets/play.png" width="20" height="20"></input>
@@ -102,19 +102,19 @@ if (mysqli_num_rows($result_playlist) > 0) {
                                 echo "$name";
                                 ?></p>
                             <div class="option_link">
-                                <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
+                                <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                     <div>
                                         <input type="hidden" name="move_up"></input>
                                         <input class="moveUp" type="image" src="assets/up.png" width="15" height="10"></input>
                                     </div>
                                 </form>
-                                <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
+                                <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                     <div>
                                         <input type="hidden" name="move_down"></input>
                                         <input class="moveDown" type="image" src="assets/down.png" width="15" height="10"></input>
                                     </div>
                                 </form>
-                                <form class="remove_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
+                                <form class="remove_item" method="post" action="index.php?linkid=<?php echo $link_id ?>">
                                     <div>
                                         <input type="hidden" name="remove_music"></input>
                                         <input class="removeLink" type="image" src="assets/remove.png" width="12" height="12"></input>
@@ -128,7 +128,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                         }
                             ?>
             </div>
-            <form class="on_one_line" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
+            <form class="on_one_line" method="post" action="index.php?playlistid=<?php echo $playlist_id ?>">
                 <input class="inputLink" type="test" name="link">
                 <div class="add_item">
                     <input type="hidden" name="add_link"></input>
