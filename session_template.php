@@ -12,9 +12,9 @@ if (!isset($_SESSION['username'])) {
     <?php if (isset($_SESSION['success'])) : ?>
         <div class="header">
             <a href="index.php?logout='1'">
-                <img class="logout" src="logout.png" height="25" width="25"></img>
+                <img class="logout" src="assets/logout.png" height="25" width="25"></img>
             </a>
-            <a href="index.php"><img class="logo" src="logo.png" height="200" width="200"></a>
+            <a href="index.php"><img class="logo" src="assets/logo.png" height="200" width="200"></a>
             <div class="blank"></div>
         </div>
         <div class="content">

@@ -5,8 +5,8 @@
 
 <head>
 	<title>Wakoky Sign in</title>
-	<link rel="stylesheet" type="text/css" href="login.css">
-	<link rel="icon" type="image/ico" href="logo_zoom.png" />
+	<link rel="stylesheet" type="text/css" href="style/login.css">
+	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 
 		<setion class="login-wrapper">
 			<div class="logo">
-				<img src="logo.png" alt=""></a>
+				<img src="assets/logo.png" alt=""></a>
 			</div>
 
 			<form id="login" method="post" action="login.php">

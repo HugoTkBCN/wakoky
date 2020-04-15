@@ -17,7 +17,7 @@ if (!$db) {
         <div class="add_item">
             <input class="inputPlaylistName" type="text" name="name">
             <input type="hidden" name="add_playlist"></input>
-            <input class="addPlaylist" type="image" src="add.png" width="30" height="30"></input>
+            <input class="addPlaylist" type="image" src="assets/add.png" width="30" height="30"></input>
         </div>
     </form>
 
@@ -46,14 +46,14 @@ if (!$db) {
                         <form class="remove_item" method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
                             <div>
                                 <input type="hidden" name="remove_playlist"></input>
-                                <input class="removeLink" type="image" src="remove.png" name="remove_playlist" width="20" height="20"></input>
+                                <input class="removeLink" type="image" src="assets/remove.png" name="remove_playlist" width="20" height="20"></input>
                             </div>
                         </form>
                         <a class="play_playlist" href="session.php?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
                         <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>">
                             <div>
                                 <input type="hidden" name="play_playlist"></input>
-                                <input class="addLink" type="image" src="play.png" width="30" height="30"></input>
+                                <input class="addLink" type="image" src="assets/play.png" width="30" height="30"></input>
                             </div>
                         </form>
 
@@ -91,7 +91,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                             <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                 <div>
                                     <input type="hidden" name="play_music"></input>
-                                    <input class="playLink" type="image" src="play.png" width="20" height="20"></input>
+                                    <input class="playLink" type="image" src="assets/play.png" width="20" height="20"></input>
                                 </div>
                             </form>
                             <p><?php
@@ -105,19 +105,19 @@ if (mysqli_num_rows($result_playlist) > 0) {
                                 <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                     <div>
                                         <input type="hidden" name="move_up"></input>
-                                        <input class="moveUp" type="image" src="up.png" width="15" height="10"></input>
+                                        <input class="moveUp" type="image" src="assets/up.png" width="15" height="10"></input>
                                     </div>
                                 </form>
                                 <form method="post" action="session.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                     <div>
                                         <input type="hidden" name="move_down"></input>
-                                        <input class="moveDown" type="image" src="down.png" width="15" height="10"></input>
+                                        <input class="moveDown" type="image" src="assets/down.png" width="15" height="10"></input>
                                     </div>
                                 </form>
                                 <form class="remove_item" method="post" action="session.php?linkid=<?php echo $link_id ?>">
                                     <div>
                                         <input type="hidden" name="remove_music"></input>
-                                        <input class="removeLink" type="image" src="remove.png" width="12" height="12"></input>
+                                        <input class="removeLink" type="image" src="assets/remove.png" width="12" height="12"></input>
                                     </div>
                                 </form>
                             </div>
@@ -132,7 +132,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                 <input class="inputLink" type="test" name="link">
                 <div class="add_item">
                     <input type="hidden" name="add_link"></input>
-                    <input class="addLink" type="image" src="add.png" width="30" height="30"></input>
+                    <input class="addLink" type="image" src="assets/add.png" width="30" height="30"></input>
                 </div>
             </form>
         </li> <?php

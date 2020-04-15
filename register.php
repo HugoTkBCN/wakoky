@@ -5,8 +5,8 @@
 
 <head>
 	<title>Wakoky Sign In</title>
-	<link rel="stylesheet" type="text/css" href="register.css">
-	<link rel="icon" type="image/ico" href="logo_zoom.png" />
+	<link rel="stylesheet" type="text/css" href="style/register.css">
+	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 
 		<setion class="register-wrapper">
 			<div class="logo">
-				<img src="logo.png" alt=""></a>
+				<img src="assets/logo.png" alt=""></a>
 			</div>
 
 			<form id="register" method="post" action="register.php">
