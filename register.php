@@ -7,6 +7,7 @@
 	<title>Wakoky Sign In</title>
 	<link rel="stylesheet" type="text/css" href="style/register.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
+	<script data-ad-client="ca-pub-1653403322985348" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 
 <body>

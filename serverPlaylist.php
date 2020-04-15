@@ -20,8 +20,6 @@ function reload_playlist()
     $result = mysqli_query($db, $query);
     $row = mysqli_fetch_assoc($result);
     $exec_order = $row['exec_order'];
-    echo "<br>";
-    echo $exec_order;
     $tmp = [];
     $tmp[0] = $link_id;
 
@@ -36,8 +34,6 @@ function reload_playlist()
         $tmp[$i] = $row["id"];
     };
     $link_id = $tmp[$_COOKIE['order'] - 1];
-    echo "<br>";
-    echo $link_id;
 ?>
     <form method="post" action="index.php?at_time=1&playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>" id="load">
         <input type="hidden" name="play_music"></input>
