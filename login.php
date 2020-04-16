@@ -7,6 +7,12 @@
 	<title>Wakoky Sign in</title>
 	<link rel="stylesheet" type="text/css" href="style/login.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
+	<script type="text/javascript">
+		window._mNHandle = window._mNHandle || {};
+		window._mNHandle.queue = window._mNHandle.queue || [];
+		medianet_versionId = "3121199";
+	</script>
+	<script src="https://contextual.media.net/dmedianet.js?cid=8CU9AE433" async="async"></script>
 </head>
 
 <body>
