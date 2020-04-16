@@ -165,3 +165,12 @@
 #title {
     font-size: 15px;
 }
+
+hr.separator{
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, #262626, #afafaf, #262626);
+    background-image: -moz-linear-gradient(left, #262626, #afafaf, #262626);
+    background-image: -ms-linear-gradient(left,  #262626, #afafaf, #262626);
+    background-image: -o-linear-gradient(left, #262626, #afafaf, #262626);
+}

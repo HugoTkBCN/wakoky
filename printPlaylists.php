@@ -122,6 +122,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                                 </form>
                             </div>
                         </div>
+                        <hr class="separator">
                         <?php
                     }
                         ?><?php
