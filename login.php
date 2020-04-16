@@ -16,9 +16,7 @@
 </head>
 
 <body>
-	<div></div>
 	<div class="login_form">
-
 		<setion class="login-wrapper">
 			<div class="logo">
 				<img src="assets/logo.png" alt=""></a>
