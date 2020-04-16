@@ -13,7 +13,7 @@
 		medianet_versionId = "3121199";
 	</script>
 	<script src="https://contextual.media.net/dmedianet.js?cid=8CU9AE433" async="async"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="popupHelp.js"></script>
 </head>
 
