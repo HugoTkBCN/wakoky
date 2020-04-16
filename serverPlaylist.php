@@ -132,13 +132,39 @@ if (isset($_POST['add_link'])) { // add link to playlist
 
 if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_playlist
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
-    $_SESSION['actual_playlist'] = [];
-    $_COOKIE['playlist_id'] = $playlist_id;
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
-    $result = mysqli_query($db, $query);
-    if (mysqli_num_rows($result) <= 0) {
+    if (isset($_COOKIE['playlist_id'])) {
+        if ($_COOKIE['playlist_id'] == $playlist_id) {
+            $_SESSION['actual_playlist'] = [];
+            unset($_COOKIE['playlist_id']);
+            setcookie('playlist_id', '', time() - 4200, '/');
+            unset($_COOKIE['link_id']);
+            setcookie('link_id', '', time() - 4200, '/');
+            unset($_COOKIE['loaded']);
+            setcookie('loader', '', time() - 4200, '/');
+            unset($_COOKIE['time']);
+            setcookie('time', '', time() - 4200, '/');
+        } else {
+            $_SESSION['actual_playlist'] = [];
+            $_COOKIE['playlist_id'] = $playlist_id;
+            $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
+            $result = mysqli_query($db, $query);
+            for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
+                if ($i == 0)
+                    $link_id = $row['id'];
+                $_SESSION['actual_playlist'][$i] = $row["link"];
+            };
+            setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
+            setcookie('link_id', $link_id, time() + (86400 * 30), "/");
+            setcookie('loaded', '1', time() + (86400 * 30), "/");
+            setcookie('time', '0', time() + (86400 * 30), "/");
+        }
         header('location: index.php');
     } else {
+
+        $_SESSION['actual_playlist'] = [];
+        $_COOKIE['playlist_id'] = $playlist_id;
+        $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
+        $result = mysqli_query($db, $query);
         for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
             if ($i == 0)
                 $link_id = $row['id'];

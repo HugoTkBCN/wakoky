@@ -53,7 +53,7 @@ if (!$db) {
                         <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>">
                             <div>
                                 <input type="hidden" name="play_playlist"></input>
-                                <input class="addLink" type="image" src="assets/play.png" width="30" height="30"></input>
+                                <input class="addLink" type="image" src="<?php if ($_COOKIE['playlist_id'] == $playlist_id) { echo "assets/pause.png"; } else { echo "assets/play.png";}?>" width="30" height="30"></input>
                             </div>
                         </form>
 
@@ -91,7 +91,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                             <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                 <div>
                                     <input type="hidden" name="play_music"></input>
-                                    <input class="playLink" type="image" src="assets/play.png" width="20" height="20"></input>
+                                    <input class="playLink" type="image" src="<?php if ($_COOKIE['link_id'] == $link_id) { echo "assets/pause.png"; } else { echo "assets/play.png";}?>" width="20" height="20"></input>
                                 </div>
                             </form>
                             <p><?php
