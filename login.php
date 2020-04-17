@@ -47,12 +47,14 @@
 					<label for="password">Password</label>
 					<input class="password" required name="password" type="password" />
 					<button type="submit" name="login_user">Sign In</button>
-					<div class="sign_up"><a href="register.php">You don't have an account ? Sign Up Here</a></div>
+					<div class="sign_up">
+						<a href="register.php">You don't have an account ? Sign Up Here</a>
+					</div>
 				</form>
 				</section>
 		</div>
+		<iframe src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=13&l=ez&f=ifr&linkID=938f3a87bfe6db967bfe39c63b5246b7&t=wakoky-20&tracking_id=wakoky-20" width="468" height="60" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
 	</div>
-	<iframe src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=7&l=ez&f=ifr&linkID=29f42b4af1b64bd6d876efc16c28d492&t=wakoky-20&tracking_id=wakoky-20" width="468" height="40" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
 </body>
 
 </html>
