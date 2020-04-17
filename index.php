@@ -3,7 +3,12 @@ session_start();
 
 if (!isset($_SESSION['username'])) {
 	$_SESSION['msg'] = "You must log in first";
-	header('location: login');
+	$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ?
+		"https" : "http") . "://" . $_SERVER['HTTP_HOST'] .
+		$_SERVER['REQUEST_URI'];
+	$parse = parse_url($url);
+	$host = $parse['host'];
+	header("location: $host/login");
 }
 
 if (isset($_GET['logout'])) {
