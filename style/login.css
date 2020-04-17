@@ -204,3 +204,7 @@ form button:focus, form button:hover {
     text-decoration: underline;
 }
 /* Popup box BEGIN */
+
+.pub_login {
+    justify-content: center;
+}

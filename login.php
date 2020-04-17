@@ -52,7 +52,9 @@
 				</section>
 		</div>
 	</div>
-	<iframe src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=48&l=ez&f=ifr&linkID=eb8724d57e4042c9e5e195ade52ed500&t=wakoky-20&tracking_id=wakoky-20" width="728" height="90" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+	<div class="pub_login">
+		<iframe src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=7&l=ez&f=ifr&linkID=29f42b4af1b64bd6d876efc16c28d492&t=wakoky-20&tracking_id=wakoky-20" width="468" height="40" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+	</div>
 </body>
 
 </html>
