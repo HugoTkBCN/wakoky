@@ -52,7 +52,21 @@
 				</section>
 		</div>
 	</div>
-	<iframe src="//rcm-na.amazon-adsystem.com/e/cm?o=1&p=7&l=ez&f=ifr&linkID=85a35c287c6ab37af90cf827cdccda03&t=wakoky-20&tracking_id=wakoky-20" width="468" height="40" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+	<div class="alignleft">
+		<script type="text/javascript">
+			amzn_assoc_ad_type = "banner";
+			amzn_assoc_marketplace = "amazon";
+			amzn_assoc_region = "US";
+			amzn_assoc_placement = "assoc_banner_placement_AssociatesUS";
+			amzn_assoc_banner_type = "ez";
+			amzn_assoc_p = "13";
+			amzn_assoc_width = "468";
+			amzn_assoc_height = "60";
+			amzn_assoc_tracking_id = "wakoky-20";
+			amzn_assoc_linkid = "6b054e28eca7496fdbad8a477377acb5";
+		</script>
+		<script src="//z-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1"></script>
+	</div>
 </body>
 
 </html>
