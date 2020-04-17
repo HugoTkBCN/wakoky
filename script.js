@@ -53,7 +53,7 @@ function onPlayerStateChange(event) {
             document.getElementById("title").innerHTML = title;
         });
         document.cookie = "time=" + '0';
-        $("#reloadPlaylist").load("index.php");
+        location.reload();
     }
 }
 
@@ -174,7 +174,7 @@ $('#next').on('click', function () {
         document.getElementById("title").innerHTML = title;
     });
     document.cookie = "time=" + '0';
-    $("#reloadPlaylist").load("index.php");
+    location.reload();
 });
 
 $('#prev').on('click', function () {
@@ -194,7 +194,7 @@ $('#prev').on('click', function () {
         document.getElementById("title").innerHTML = title;
     });
     document.cookie = "time=" + '0';
-    $("#reloadPlaylist").load("index.php");
+    location.reload();
 });
 
 // Load video
