@@ -30,11 +30,8 @@ if (!$db) {
 }
 include('serverPlaylist.php');
 if (isset($_COOKIE['playing'])) {
-	if ($_COOKIE['playing'] == '1' && $_COOKIE['loaded'] == '0') {
-		echo "mamen";
+	if ($_COOKIE['playing'] == '1' && $_COOKIE['loaded'] == '0')
 		reload_playlist();
-		echo "d";
-	}
 }
 ?>
 <!DOCTYPE html>
