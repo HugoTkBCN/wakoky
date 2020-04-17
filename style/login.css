@@ -27,6 +27,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .login_form {
@@ -48,6 +49,7 @@ body {
     -ms-flex-pack: center;
     -webkit-align-items: center;
     align-items: center;
+    padding: 20px;
 }
 
 .login-wrapper {

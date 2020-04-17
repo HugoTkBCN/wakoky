@@ -28,7 +28,12 @@ body {
 }
 
 .blank {
-    width: 25px;
+    width: 400px;
+}
+
+
+.pub_header {
+    margin: 50px 100px 0px 0px;
 }
 
 .logout:hover {
