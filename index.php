@@ -3,7 +3,7 @@ session_start();
 
 if (!isset($_SESSION['username'])) {
 	$_SESSION['msg'] = "You must log in first";
-	header('location: login.php');
+	header('location: login');
 }
 
 if (isset($_GET['logout'])) {
@@ -13,7 +13,7 @@ if (isset($_GET['logout'])) {
 		unset($_COOKIE[$cookie_name]);
 		setcookie($cookie_name, '', time() - 4200, '/');
 	}
-	header("location: login.php");
+	header("location: login");
 }
 
 if (isset($_GET['error'])) {
