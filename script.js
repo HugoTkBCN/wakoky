@@ -42,7 +42,7 @@ function onPlayerStateChange(event) {
         var order = parseInt(accessCookie("order"));
         var index = myPLaylistId[order - 1];
         document.getElementById("play_pause_button_" + index).src = "./assets/play.png";
-        if (order + 1 > parseInt(accessCookie("numberMusic")) - 1)
+        if (order + 1 > parseInt(accessCookie("numberMusic")))
             order = 1;
         else
             order += 1;
