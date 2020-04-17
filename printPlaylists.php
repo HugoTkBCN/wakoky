@@ -72,7 +72,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
         $playlist_id = $row_playlist["id"];
         $playlist_name = $row_playlist["name"];
 ?>
-        <li id="reloadPlaylist" class="playlist">
+        <li class="playlist">
             <div class="on_one_line">
                 <a class="play_playlist" href="index.php?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
             </div>

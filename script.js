@@ -53,7 +53,6 @@ function onPlayerStateChange(event) {
             document.getElementById("title").innerHTML = title;
         });
         document.cookie = "time=" + '0';
-        location.reload();
     }
 }
 
@@ -174,7 +173,6 @@ $('#next').on('click', function () {
         document.getElementById("title").innerHTML = title;
     });
     document.cookie = "time=" + '0';
-    location.reload();
 });
 
 $('#prev').on('click', function () {
@@ -194,7 +192,6 @@ $('#prev').on('click', function () {
         document.getElementById("title").innerHTML = title;
     });
     document.cookie = "time=" + '0';
-    location.reload();
 });
 
 // Load video
