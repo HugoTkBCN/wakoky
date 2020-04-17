@@ -7,6 +7,19 @@
 	<title>Wakoky Sign in</title>
 	<link rel="stylesheet" type="text/css" href="style/login.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163901596-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-163901596-1');
+	</script>
+
 	<script type="text/javascript">
 		window._mNHandle = window._mNHandle || {};
 		window._mNHandle.queue = window._mNHandle.queue || [];
