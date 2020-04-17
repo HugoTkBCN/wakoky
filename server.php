@@ -60,7 +60,7 @@ if (isset($_POST['reg_user'])) {
 		$_SESSION['username'] = $username;
 		$_SESSION['success'] = "You are now logged in";
 		$_SESSION['actual_playlist'] = [];
-		header('location: index');
+		header('location: index.php');
 	}
 }
 
@@ -87,7 +87,7 @@ if (isset($_POST['login_user'])) {
 			$_SESSION['username'] = $username;
 			$_SESSION['success'] = "You are now logged in";
 			$_SESSION['actual_playlist'] = [];
-			header('location: index');
+			header('location: index.php');
 		} else {
 			array_push($errors, "Wrong username/password combination");
 		}
