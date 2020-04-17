@@ -3,12 +3,7 @@ session_start();
 
 if (!isset($_SESSION['username'])) {
 	$_SESSION['msg'] = "You must log in first";
-	$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ?
-		"https" : "http") . "://" . $_SERVER['HTTP_HOST'] .
-		$_SERVER['REQUEST_URI'];
-	$parse = parse_url($url);
-	$host = $parse['host'];
-	header("location: $host/login");
+	header('location: login.php');
 }
 
 if (isset($_GET['logout'])) {
@@ -18,7 +13,7 @@ if (isset($_GET['logout'])) {
 		unset($_COOKIE[$cookie_name]);
 		setcookie($cookie_name, '', time() - 4200, '/');
 	}
-	header("location: login");
+	header("location: login.php");
 }
 
 if (isset($_GET['error'])) {
