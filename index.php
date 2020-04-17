@@ -57,28 +57,12 @@ if (isset($_COOKIE['playing'])) {
 
 		gtag('config', 'UA-163901596-1');
 	</script>
-
-	<script type="text/javascript">
-		window._mNHandle = window._mNHandle || {};
-		window._mNHandle.queue = window._mNHandle.queue || [];
-		medianet_versionId = "3121199";
-	</script>
-	<script src="https://contextual.media.net/dmedianet.js?cid=8CU9AE433" async="async"></script>
 </head>
 
 <body>
 	<?php if (isset($_SESSION['success'])) : ?>
 		<div id="video-placeholder"></div>
 		<?php include('session_template.php'); ?>
-		<div id="818251611">
-			<script type="text/javascript">
-				try {
-					window._mNHandle.queue.push(function() {
-						window._mNDetails.loadTag("818251611", "160x600", "818251611");
-					});
-				} catch (error) {}
-			</script>
-		</div>
 	<?php endif ?>
 	</div>
 </body>
