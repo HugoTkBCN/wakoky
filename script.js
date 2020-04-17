@@ -52,6 +52,8 @@ function onPlayerStateChange(event) {
                 title = title.slice(0, 30 - title.length) + "...";
             document.getElementById("title").innerHTML = title;
         });
+        document.cookie = "time=" + '0';
+        $("#reloadPlaylist").load("index.php");
     }
 }
 
@@ -171,6 +173,8 @@ $('#next').on('click', function () {
             title = title.slice(0, 30 - title.length) + "...";
         document.getElementById("title").innerHTML = title;
     });
+    document.cookie = "time=" + '0';
+    $("#reloadPlaylist").load("index.php");
 });
 
 $('#prev').on('click', function () {
@@ -189,6 +193,8 @@ $('#prev').on('click', function () {
             title = title.slice(0, 30 - title.length) + "...";
         document.getElementById("title").innerHTML = title;
     });
+    document.cookie = "time=" + '0';
+    $("#reloadPlaylist").load("index.php");
 });
 
 // Load video

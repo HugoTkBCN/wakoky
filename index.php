@@ -31,7 +31,9 @@ if (!$db) {
 include('serverPlaylist.php');
 if (isset($_COOKIE['playing'])) {
 	if ($_COOKIE['playing'] == '1' && $_COOKIE['loaded'] == '0') {
+		echo "mamen";
 		reload_playlist();
+		echo "d";
 	}
 }
 ?>
