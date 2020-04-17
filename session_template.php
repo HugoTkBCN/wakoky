@@ -50,6 +50,7 @@ if (!isset($_SESSION['username'])) {
             <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
             <script type="text/javascript">
                 var myPLaylist = <?php echo '["' . implode('", "', $_SESSION['actual_playlist']) . '"]' ?>;
+                var myPLaylistId = <?php echo '["' . implode('", "', $_SESSION['actual_playlist_id']) . '"]' ?>;
             </script>
             <script type="text/javascript" src="script.js"></script>
         </div>

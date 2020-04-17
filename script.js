@@ -40,6 +40,8 @@ function accessCookie(cookieName) {
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.ENDED) {
         var order = parseInt(accessCookie("order"));
+        var index = myPLaylistId[order - 1];
+        document.getElementById("play_pause_button_" + index).src = "./assets/play.png";
         if (order + 1 > parseInt(accessCookie("numberMusic")) - 1)
             order = 1;
         else
@@ -51,6 +53,8 @@ function onPlayerStateChange(event) {
             if (title.length > 30)
                 title = title.slice(0, 30 - title.length) + "...";
             document.getElementById("title").innerHTML = title;
+            index = myPLaylistId[order - 1];
+            document.getElementById("play_pause_button_" + index.toString()).src = "./assets/pause.png";
         });
         document.cookie = "time=" + '0';
     }
@@ -159,6 +163,8 @@ $('#next').on('click', function () {
     player.nextVideo();
     var order = parseInt(accessCookie("order"));
     document.cookie = "order=" + order;
+    var index = myPLaylistId[order - 1];
+    document.getElementById("play_pause_button_" + index).src = "./assets/play.png";
     if (order + 1 > parseInt(accessCookie("numberMusic")))
         order = 1;
     else
@@ -166,11 +172,12 @@ $('#next').on('click', function () {
     document.cookie = "order=" + order;
     var api_key = "AIzaSyB96N_CX-mutJ1SdPcs8QoeoBz2YQJzieg";
     $.getJSON("https://www.googleapis.com/youtube/v3/videos?part=id%2Csnippet&id=" + myPLaylist[order - 1] + "&key=" + api_key, function (data) {
-        //var obj = $.parseJSON(data);
         var title = data.items[0].snippet.localized.title;
         if (title.length > 30)
             title = title.slice(0, 30 - title.length) + "...";
         document.getElementById("title").innerHTML = title;
+        index = myPLaylistId[order - 1];
+        document.getElementById("play_pause_button_" + index).src = "./assets/pause.png";
     });
     document.cookie = "time=" + '0';
 });
@@ -178,6 +185,8 @@ $('#next').on('click', function () {
 $('#prev').on('click', function () {
     player.previousVideo();
     var order = parseInt(accessCookie("order"));
+    var index = myPLaylistId[order - 1];
+    document.getElementById("play_pause_button_" + index.toString()).src = "./assets/play.png";
     if (order - 1 < 1)
         order = parseInt(accessCookie("numberMusic"));
     else
@@ -185,11 +194,12 @@ $('#prev').on('click', function () {
     document.cookie = "order=" + order;
     var api_key = "AIzaSyB96N_CX-mutJ1SdPcs8QoeoBz2YQJzieg";
     $.getJSON("https://www.googleapis.com/youtube/v3/videos?part=id%2Csnippet&id=" + myPLaylist[order - 1] + "&key=" + api_key, function (data) {
-        //var obj = $.parseJSON(data);
         var title = data.items[0].snippet.localized.title;
         if (title.length > 30)
             title = title.slice(0, 30 - title.length) + "...";
         document.getElementById("title").innerHTML = title;
+        index = myPLaylistId[order - 1];
+        document.getElementById("play_pause_button_" + index.toString()).src = "./assets/pause.png";
     });
     document.cookie = "time=" + '0';
 });

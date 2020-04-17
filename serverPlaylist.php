@@ -134,6 +134,7 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_p
     if (isset($_COOKIE['playlist_id'])) {
         if ($_COOKIE['playlist_id'] == $playlist_id) {
             $_SESSION['actual_playlist'] = [];
+            $_SESSION['actual_playlist_id'] = [];
             unset($_COOKIE['playlist_id']);
             setcookie('playlist_id', '', time() - 4200, '/');
             unset($_COOKIE['link_id']);
@@ -144,6 +145,7 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_p
             setcookie('time', '', time() - 4200, '/');
         } else {
             $_SESSION['actual_playlist'] = [];
+            $_SESSION['actual_playlist_id'] = [];
             $_COOKIE['playlist_id'] = $playlist_id;
             $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
             $result = mysqli_query($db, $query);
@@ -151,6 +153,7 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_p
                 if ($i == 0)
                     $link_id = $row['id'];
                 $_SESSION['actual_playlist'][$i] = $row["link"];
+                $_SESSION['actual_playlist_id'][$i] = $row["id"];
             };
             setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
             setcookie('link_id', $link_id, time() + (86400 * 30), "/");
@@ -159,8 +162,8 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_p
         }
         header('location: index.php');
     } else {
-
         $_SESSION['actual_playlist'] = [];
+        $_SESSION['actual_playlist_id'] = [];
         $_COOKIE['playlist_id'] = $playlist_id;
         $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
         $result = mysqli_query($db, $query);
@@ -168,6 +171,7 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_p
             if ($i == 0)
                 $link_id = $row['id'];
             $_SESSION['actual_playlist'][$i] = $row["link"];
+            $_SESSION['actual_playlist_id'][$i] = $row["id"];
         };
         setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
         setcookie('link_id', $link_id, time() + (86400 * 30), "/");
@@ -183,6 +187,7 @@ if (isset($_POST['play_music']) || isset($_GET['play_music'])) { // play_music
     if (isset($_COOKIE['playlist_id']) && isset($_COOKIE['link_id']) && !isset($_GET['reload'])) {
         if ($_COOKIE['playlist_id'] == $playlist_id && $_COOKIE['link_id'] == $link_id) {
             $_SESSION['actual_playlist'] = [];
+            $_SESSION['actual_playlist_id'] = [];
             unset($_COOKIE['link_id']);
             setcookie('link_id', '', time() - 4200, '/');
             unset($_COOKIE['loaded']);
@@ -191,20 +196,24 @@ if (isset($_POST['play_music']) || isset($_GET['play_music'])) { // play_music
             setcookie('time', '', time() - 4200, '/');
         } else {
             $_SESSION['actual_playlist'] = [];
+            $_SESSION['actual_playlist_id'] = [];
             $query = "SELECT * FROM links WHERE id='$link_id'";
             $result = mysqli_query($db, $query);
             $row = mysqli_fetch_assoc($result);
             $exec_order = $row['exec_order'];
             $_SESSION['actual_playlist'][0] = $row["link"];
+            $_SESSION['actual_playlist_id'][0] = $row["id"];
             $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC";
             $result = mysqli_query($db, $query);
             for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
                 $_SESSION['actual_playlist'][$i] = $row["link"];
+                $_SESSION['actual_playlist_id'][$i] = $row["id"];
             };
             $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC";
             $result = mysqli_query($db, $query);
             for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
                 $_SESSION['actual_playlist'][$i] = $row["link"];
+                $_SESSION['actual_playlist_id'][$i] = $row["id"];
             };
             setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
             setcookie('link_id', $link_id, time() + (86400 * 30), "/");
@@ -216,20 +225,24 @@ if (isset($_POST['play_music']) || isset($_GET['play_music'])) { // play_music
         header('location: index.php');
     } else {
         $_SESSION['actual_playlist'] = [];
+        $_SESSION['actual_playlist_id'] = [];
         $query = "SELECT * FROM links WHERE id='$link_id'";
         $result = mysqli_query($db, $query);
         $row = mysqli_fetch_assoc($result);
         $exec_order = $row['exec_order'];
         $_SESSION['actual_playlist'][0] = $row["link"];
+        $_SESSION['actual_playlist_id'][0] = $row["id"];
         $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC";
         $result = mysqli_query($db, $query);
         for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
             $_SESSION['actual_playlist'][$i] = $row["link"];
+            $_SESSION['actual_playlist_id'][$i] = $row["id"];
         };
         $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC";
         $result = mysqli_query($db, $query);
         for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
             $_SESSION['actual_playlist'][$i] = $row["link"];
+            $_SESSION['actual_playlist_id'][$i] = $row["id"];
         };
         setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
         setcookie('link_id', $link_id, time() + (86400 * 30), "/");

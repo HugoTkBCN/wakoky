@@ -5,7 +5,7 @@ session_start();
 $db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
 
 if (!$db) {
-	die("Connection failed: " . mysqli_connect_error());
+    die("Connection failed: " . mysqli_connect_error());
 }
 ?>
 
@@ -53,10 +53,13 @@ if (!$db) {
                         <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>">
                             <div>
                                 <input type="hidden" name="play_playlist"></input>
-                                <input class="addLink" type="image" src="<?php if ($_COOKIE['playlist_id'] == $playlist_id) { echo "assets/pause.png"; } else { echo "assets/play.png";}?>" width="30" height="30"></input>
+                                <input type="image" src="<?php if ($_COOKIE['playlist_id'] == $playlist_id) {
+                                                                echo "assets/pause.png";
+                                                            } else {
+                                                                echo "assets/play.png";
+                                                            } ?>" width="30" height="30"></input>
                             </div>
                         </form>
-
                     </div>
             <?php }
             } ?>
@@ -91,7 +94,11 @@ if (mysqli_num_rows($result_playlist) > 0) {
                             <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                                 <div>
                                     <input type="hidden" name="play_music"></input>
-                                    <input class="playLink" type="image" src="<?php if ($_COOKIE['link_id'] == $link_id) { echo "assets/pause.png"; } else { echo "assets/play.png";}?>" width="20" height="20"></input>
+                                    <input id="play_pause_button_<?php echo $link_id; ?>" class="playLink" type="image" src="<?php if ($_COOKIE['link_id'] == $link_id) {
+                                                                                                                            echo "assets/pause.png";
+                                                                                                                        } else {
+                                                                                                                            echo "assets/play.png";
+                                                                                                                        } ?>" width="20" height="20"></input>
                                 </div>
                             </form>
                             <p><?php
@@ -133,7 +140,7 @@ if (mysqli_num_rows($result_playlist) > 0) {
                 <input class="inputLink" type="test" name="link">
                 <div class="add_item">
                     <input type="hidden" name="add_link"></input>
-                    <input class="addLink" type="image" src="assets/add.png" width="30" height="30"></input>
+                    <input type="image" src="assets/add.png" width="30" height="30"></input>
                 </div>
             </form>
         </li> <?php
