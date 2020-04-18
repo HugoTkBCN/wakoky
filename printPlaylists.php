@@ -10,7 +10,7 @@ if (!$db) {
 ?>
 
 <div class="info_playlists">
-    <form class="add_playlist" method="post" action="serverPlaylist.php">
+    <form class="add_playlist" method="post">
         <strong>
             <p>Add New Playlist</p>
         </strong>

@@ -69,7 +69,6 @@ if (isset($_POST['add_playlist'])) {
             $query = "INSERT INTO playlists (name, user_id) 
 					  VALUES('$name', '$user_id')";
             mysqli_query($db, $query);
-            header('location: index.php');
         }
     }
 }
@@ -113,6 +112,16 @@ if (isset($_POST['add_link'])) { // add link to playlist
             $video_id = explode("&", $video_id[1]); // Deleting any other params
             $video_id = $video_id[0];
             $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
+            if (empty($video_id)) {
+                $ytshorturl = 'youtu.be/';
+                $ytlongurl = 'www.youtube.com/watch?v=';
+                $link = str_replace($ytshorturl, $ytlongurl, $link);
+                $video_id = explode("?v=", $link); // For videos like http://www.youtube.com/watch?v=...
+                if (empty($video_id[1]))
+                    $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
+                $video_id = explode("&", $video_id[1]); // Deleting any other params
+                $video_id = $video_id[0];
+            }
             $title = youtube_title($video_id);
             $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order DESC";
             $result = mysqli_query($db, $query);
