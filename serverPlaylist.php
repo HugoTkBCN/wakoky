@@ -1,18 +1,28 @@
 <?php
 session_start();
 
-// connect to database
-$db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
-if (!$db) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+#################################################
+############  Connect to database  ##############
+#################################################
 
-function reload_playlist()
+function connect_to_databas()
 {
     $db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
     if (!$db) {
         die("Connection failed: " . mysqli_connect_error());
     }
+    return ($db);
+}
+
+$db = connect_to_databas();
+
+#################################################
+############   Utils Function  ##################
+#################################################
+
+function reload_playlist()
+{
+    $db = connect_to_databas();
     $playlist_id = $_COOKIE['playlist_id'];
     $link_id = $_COOKIE['link_id'];
 
@@ -44,55 +54,74 @@ function reload_playlist()
 <?php
 }
 
-//  create playlist
+function get_youtube_title($id)
+{
+    $api_key = "AIzaSyB96N_CX-mutJ1SdPcs8QoeoBz2YQJzieg";
+    $videoTitle = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id=" . $id . "&key=$api_key&fields=items(id,snippet(title),statistics)&part=snippet,statistics");
+    if ($videoTitle) {
+        $json = json_decode($videoTitle, true);
+        return $json['items'][0]['snippet']['title'];
+    } else
+        return "";
+}
+
+function get_id($link)
+{
+    $video_id = explode("?v=", $link); // For videos like http://www.youtube.com/watch?v=...
+    if (empty($video_id[1]))
+        $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
+    $video_id = explode("&", $video_id[1]); // Deleting any other params
+    $video_id = $video_id[0];
+    return ($video_id);
+}
+
+function unset_cookie($name)
+{
+    unset($_COOKIE[$name]);
+    setcookie($name, '', time() - 4200, '/');
+}
+
+function exec_query($query, $db)
+{
+    return (mysqli_query($db, $query));
+}
+
+#################################################
+############  Create Playlist  ##################
+#################################################
+
 if (isset($_POST['add_playlist'])) {
-    // receive all input values from the form
     $name = mysqli_real_escape_string($db, $_POST['name']);
     $username = $_SESSION['username'];
-    $query = "SELECT id FROM users WHERE username='$username'";
-    $result = mysqli_query($db, $query);
+
+    $result = exec_query("SELECT id FROM users WHERE username='$username'", $db);
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $user_id = $row["id"];
     }
-
-    // form validation: ensure that the form is correctly filled
     if (empty($name))
         header('location: index.php?error=Name is required');
     else {
-        //check if name used
-        $query = "SELECT * FROM playlists WHERE name='$name' AND user_id='$user_id'";
-        $result = mysqli_query($db, $query);
+        $result = exec_query("SELECT * FROM playlists WHERE name='$name' AND user_id='$user_id'", $db);
         if (mysqli_num_rows($result) == 1)
             header('location: index.php?error=Name used');
         else {
-            $query = "INSERT INTO playlists (name, user_id) 
-					  VALUES('$name', '$user_id')";
-            mysqli_query($db, $query);
+            $result = exec_query("INSERT INTO playlists (name, user_id) 
+					  VALUES('$name', '$user_id')", $db);
         }
     }
 }
 
-function youtube_title($id)
-{
-    $api_key = "AIzaSyB96N_CX-mutJ1SdPcs8QoeoBz2YQJzieg";
-    // $id = 'YOUTUBE_ID';
-    // returns a single line of JSON that contains the video title. Not a giant request.
-    $videoTitle = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id=" . $id . "&key=$api_key&fields=items(id,snippet(title),statistics)&part=snippet,statistics");
-    // despite @ suppress, it will be false if it fails
-    if ($videoTitle) {
-        $json = json_decode($videoTitle, true);
-        return $json['items'][0]['snippet']['title'];
-    } else {
-        return false;
-    }
-}
+#################################################
+############ Add Link to playlist ###############
+#################################################
 
-if (isset($_POST['add_link'])) { // add link to playlist
+
+if (isset($_POST['add_link'])) {
     $link = mysqli_real_escape_string($db, $_POST['link']);
+    $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
 
-    // form validation: ensure that the form is correctly filled
-    if (empty($link))
+    if (empty($link) || empty($playlist_id))
         header('location: index.php?error=Link is required');
     else {
         $rx = '~
@@ -101,233 +130,179 @@ if (isset($_POST['add_link'])) { // add link to playlist
    (?:youtube[.]com/watch[?]v=|youtu[.]be/) # Mandatory domain name (w/ query string in .com)
    ([^&]{11})                               # Video id of 11 characters as capture group 1
     ~x';
-
         if (!preg_match($rx, $link, $match))
             header('location: index.php?error=Bad Link');
         else {
-
-            $video_id = explode("?v=", $link); // For videos like http://www.youtube.com/watch?v=...
-            if (empty($video_id[1]))
-                $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
-            $video_id = explode("&", $video_id[1]); // Deleting any other params
-            $video_id = $video_id[0];
-            $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
+            $video_id = get_id($link);
             if (empty($video_id)) {
                 $ytshorturl = 'youtu.be/';
                 $ytlongurl = 'www.youtube.com/watch?v=';
                 $link = str_replace($ytshorturl, $ytlongurl, $link);
-                $video_id = explode("?v=", $link); // For videos like http://www.youtube.com/watch?v=...
-                if (empty($video_id[1]))
-                    $video_id = explode("/v/", $link); // For videos like http://www.youtube.com/watch/v/..
-                $video_id = explode("&", $video_id[1]); // Deleting any other params
-                $video_id = $video_id[0];
+                $video_id = get_id($link);
             }
-            $title = youtube_title($video_id);
-            $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order DESC";
-            $result = mysqli_query($db, $query);
+            $title = get_youtube_title($video_id);
+            $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order DESC", $db);
             $exec_order = 1;
             if (mysqli_num_rows($result) > 0) {
                 $row = mysqli_fetch_assoc($result);
                 if (isset($row['exec_order']))
                     $exec_order = $row['exec_order'] + 1;
             }
-            $query = "INSERT INTO links (link, playlist_id, name, exec_order) VALUES('$video_id', '$playlist_id', '$title', '$exec_order')";
-            mysqli_query($db, $query);
+            $result = exec_query("INSERT INTO links (link, playlist_id, name, exec_order) VALUES('$video_id', '$playlist_id', '$title', '$exec_order')", $db);
             header('location: index.php');
         }
     }
 }
 
-if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) { // play_playlist
+#################################################
+############   Play playlist   ##################
+#################################################
+
+function play_playlist($playlist_id, $db)
+{
+    $_COOKIE['playlist_id'] = $playlist_id;
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC", $db);
+    for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
+        if ($i == 0)
+            $link_id = $row['id'];
+        $_SESSION['actual_playlist'][$i] = $row["link"];
+        $_SESSION['actual_playlist_id'][$i] = $row["id"];
+    };
+    setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
+    setcookie('link_id', $link_id, time() + (86400 * 30), "/");
+    setcookie('loaded', '1', time() + (86400 * 30), "/");
+    setcookie('time', '0', time() + (86400 * 30), "/");
+}
+
+if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) {
+    $_SESSION['actual_playlist'] = [];
+    $_SESSION['actual_playlist_id'] = [];
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     if (isset($_COOKIE['playlist_id'])) {
         if ($_COOKIE['playlist_id'] == $playlist_id) {
-            $_SESSION['actual_playlist'] = [];
-            $_SESSION['actual_playlist_id'] = [];
-            unset($_COOKIE['playlist_id']);
-            setcookie('playlist_id', '', time() - 4200, '/');
-            unset($_COOKIE['link_id']);
-            setcookie('link_id', '', time() - 4200, '/');
-            unset($_COOKIE['loaded']);
-            setcookie('loader', '', time() - 4200, '/');
-            unset($_COOKIE['time']);
-            setcookie('time', '', time() - 4200, '/');
-        } else {
-            $_SESSION['actual_playlist'] = [];
-            $_SESSION['actual_playlist_id'] = [];
-            $_COOKIE['playlist_id'] = $playlist_id;
-            $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
-            $result = mysqli_query($db, $query);
-            for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
-                if ($i == 0)
-                    $link_id = $row['id'];
-                $_SESSION['actual_playlist'][$i] = $row["link"];
-                $_SESSION['actual_playlist_id'][$i] = $row["id"];
-            };
-            setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
-            setcookie('link_id', $link_id, time() + (86400 * 30), "/");
-            setcookie('loaded', '1', time() + (86400 * 30), "/");
-            setcookie('time', '0', time() + (86400 * 30), "/");
-        }
-        header('location: index.php');
-    } else {
-        $_SESSION['actual_playlist'] = [];
-        $_SESSION['actual_playlist_id'] = [];
-        $_COOKIE['playlist_id'] = $playlist_id;
-        $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' ORDER BY exec_order ASC";
-        $result = mysqli_query($db, $query);
-        for ($i = 0; $row = mysqli_fetch_assoc($result); $i++) {
-            if ($i == 0)
-                $link_id = $row['id'];
-            $_SESSION['actual_playlist'][$i] = $row["link"];
-            $_SESSION['actual_playlist_id'][$i] = $row["id"];
-        };
-        setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
-        setcookie('link_id', $link_id, time() + (86400 * 30), "/");
-        setcookie('loaded', '1', time() + (86400 * 30), "/");
-        setcookie('time', '0', time() + (86400 * 30), "/");
-        header('location: index.php');
-    }
+            unset_cookie('playlist_id');
+            unset_cookie('link_id');
+            unset_cookie('loaded');
+            unset_cookie('time');
+        } else
+            play_playlist($playlist_id, $db);
+    } else
+        play_playlist($playlist_id, $db);
+    header('location: index.php');
 }
 
-if (isset($_POST['play_music']) || isset($_GET['play_music'])) { // play_music
+#################################################
+#### Play playlist but start at music ###########
+#################################################
+
+function play_music($link_id, $playlist_id, $db)
+{
+    $result = exec_query("SELECT * FROM links WHERE id='$link_id'", $db);
+    $row = mysqli_fetch_assoc($result);
+    $exec_order = $row['exec_order'];
+    $_SESSION['actual_playlist'][0] = $row["link"];
+    $_SESSION['actual_playlist_id'][0] = $row["id"];
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC", $db);
+    for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
+        $_SESSION['actual_playlist'][$i] = $row["link"];
+        $_SESSION['actual_playlist_id'][$i] = $row["id"];
+    };
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC", $db);
+    for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
+        $_SESSION['actual_playlist'][$i] = $row["link"];
+        $_SESSION['actual_playlist_id'][$i] = $row["id"];
+    };
+    setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
+    setcookie('link_id', $link_id, time() + (86400 * 30), "/");
+    setcookie('loaded', '1', time() + (86400 * 30), "/");
+    if (!isset($_GET['at_time']))
+        setcookie('time', '0', time() + (86400 * 30), "/");
+}
+
+if (isset($_POST['play_music']) || isset($_GET['play_music'])) {
+    $_SESSION['actual_playlist'] = [];
+    $_SESSION['actual_playlist_id'] = [];
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $link_id =  mysqli_real_escape_string($db, $_GET['linkid']);
     if (isset($_COOKIE['playlist_id']) && isset($_COOKIE['link_id']) && !isset($_GET['reload'])) {
         if ($_COOKIE['playlist_id'] == $playlist_id && $_COOKIE['link_id'] == $link_id) {
-            $_SESSION['actual_playlist'] = [];
-            $_SESSION['actual_playlist_id'] = [];
-            unset($_COOKIE['link_id']);
-            setcookie('link_id', '', time() - 4200, '/');
-            unset($_COOKIE['loaded']);
-            setcookie('loader', '', time() - 4200, '/');
-            unset($_COOKIE['time']);
-            setcookie('time', '', time() - 4200, '/');
-        } else {
-            $_SESSION['actual_playlist'] = [];
-            $_SESSION['actual_playlist_id'] = [];
-            $query = "SELECT * FROM links WHERE id='$link_id'";
-            $result = mysqli_query($db, $query);
-            $row = mysqli_fetch_assoc($result);
-            $exec_order = $row['exec_order'];
-            $_SESSION['actual_playlist'][0] = $row["link"];
-            $_SESSION['actual_playlist_id'][0] = $row["id"];
-            $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC";
-            $result = mysqli_query($db, $query);
-            for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
-                $_SESSION['actual_playlist'][$i] = $row["link"];
-                $_SESSION['actual_playlist_id'][$i] = $row["id"];
-            };
-            $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC";
-            $result = mysqli_query($db, $query);
-            for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
-                $_SESSION['actual_playlist'][$i] = $row["link"];
-                $_SESSION['actual_playlist_id'][$i] = $row["id"];
-            };
-            setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
-            setcookie('link_id', $link_id, time() + (86400 * 30), "/");
-            setcookie('loaded', '1', time() + (86400 * 30), "/");
-            if (!isset($_GET['at_time'])) {
-                setcookie('time', '0', time() + (86400 * 30), "/");
-            }
-        }
-        header('location: index.php');
-    } else {
-        $_SESSION['actual_playlist'] = [];
-        $_SESSION['actual_playlist_id'] = [];
-        $query = "SELECT * FROM links WHERE id='$link_id'";
-        $result = mysqli_query($db, $query);
-        $row = mysqli_fetch_assoc($result);
-        $exec_order = $row['exec_order'];
-        $_SESSION['actual_playlist'][0] = $row["link"];
-        $_SESSION['actual_playlist_id'][0] = $row["id"];
-        $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC";
-        $result = mysqli_query($db, $query);
-        for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
-            $_SESSION['actual_playlist'][$i] = $row["link"];
-            $_SESSION['actual_playlist_id'][$i] = $row["id"];
-        };
-        $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC";
-        $result = mysqli_query($db, $query);
-        for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
-            $_SESSION['actual_playlist'][$i] = $row["link"];
-            $_SESSION['actual_playlist_id'][$i] = $row["id"];
-        };
-        setcookie('playlist_id', $playlist_id, time() + (86400 * 30), "/");
-        setcookie('link_id', $link_id, time() + (86400 * 30), "/");
-        setcookie('loaded', '1', time() + (86400 * 30), "/");
-        if (!isset($_GET['at_time'])) {
-            setcookie('time', '0', time() + (86400 * 30), "/");
-        }
-        header('location: index.php');
-    }
+            unset_cookie('link_id');
+            unset_cookie('loaded');
+            unset_cookie('time');
+        } else
+            play_music($link_id, $playlist_id, $db);
+    } else
+        play_music($link_id, $playlist_id, $db); 
+    header('location: index.php');
 }
 
-if (isset($_POST['remove_music'])) { // remove_a_music
+#################################################
+######## Remove music from playlist #############
+#################################################
+
+if (isset($_POST['remove_music'])) {
     $id =  mysqli_real_escape_string($db, $_GET['linkid']);
-    $query = "SELECT * FROM links WHERE id = '$id'";
-    $result = mysqli_query($db, $query);
+    $result = exec_query("SELECT * FROM links WHERE id = '$id'", $db);
     $row = mysqli_fetch_assoc($result);
     $exec_order = $row['exec_order'];
     $playlist_id = $row['playlist_id'];
-    $query = "DELETE FROM `links` WHERE `links`.`id` = $id";
-    $result = mysqli_query($db, $query);
-    $query = "SELECT * FROM links WHERE playlist_id = '$playlist_id' AND exec_order > $exec_order ORDER BY exec_order ASC";
-    $result = mysqli_query($db, $query);
+    $result = exec_query("DELETE FROM `links` WHERE `links`.`id` = $id", $db);
+    $result = exec_query("SELECT * FROM links WHERE playlist_id = '$playlist_id' AND exec_order > $exec_order ORDER BY exec_order ASC", $db);
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
         $exec_order = $row['exec_order'] - 1;
-        $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id";
-        mysqli_query($db, $query);
+        exec_query("UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id", $db);
     }
     header('location: index.php');
 }
 
-if (isset($_POST['remove_playlist'])) { // remove_a_playlist
+#################################################
+############  Remove Playlist  ##################
+#################################################
+
+if (isset($_POST['remove_playlist'])) {
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
-    $query = "DELETE FROM `links` WHERE `links`.`playlist_id` = $playlist_id";
-    $result = mysqli_query($db, $query);
-    $query = "DELETE FROM `playlists` WHERE `playlists`.`id` = $playlist_id";
-    $result = mysqli_query($db, $query);
+    $result = exec_query("DELETE FROM `links` WHERE `links`.`playlist_id` = $playlist_id", $db);
+    $result = exec_query("DELETE FROM `playlists` WHERE `playlists`.`id` = $playlist_id", $db);
     header('location: index.php');
 }
+
+#################################################
+###########  Move music in playlist  ############
+#################################################
 
 if (isset($_POST['move_up'])) { // move music up in the playlist
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $link_id =  mysqli_real_escape_string($db, $_GET['linkid']);
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'";
-    $result = mysqli_query($db, $query);
+
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'", $db);
     $row = mysqli_fetch_assoc($result);
     $exec_order = $row['exec_order'];
     $exec_order_up = $exec_order - 1;
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND exec_order='$exec_order_up'";
-    $result = mysqli_query($db, $query);
+
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND exec_order='$exec_order_up'", $db);
     $row = mysqli_fetch_assoc($result);
     $id_up = $row["id"];
-    $exec_order_up = $row["exec_order"];
-    $query = "UPDATE `links` SET `exec_order` = $exec_order_up WHERE `links`.`id` = $link_id";
-    $result = mysqli_query($db, $query);
-    $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_up";
-    $result = mysqli_query($db, $query);
+
+    $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order_up WHERE `links`.`id` = $link_id", $db);
+    $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_up", $db);
     header('location: index.php');
 }
 
 if (isset($_POST['move_down'])) { // move the music down in the playlist
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $link_id =  mysqli_real_escape_string($db, $_GET['linkid']);
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'";
-    $result = mysqli_query($db, $query);
+
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND id = '$link_id'", $db);
     $row = mysqli_fetch_assoc($result);
     $exec_order = $row['exec_order'];
     $exec_order_down = $exec_order + 1;
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND exec_order='$exec_order_down'";
-    $result = mysqli_query($db, $query);
+
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND exec_order='$exec_order_down'", $db);
     $row = mysqli_fetch_assoc($result);
     $id_down = $row["id"];
-    $exec_order_down = $row["exec_order"];
-    $query = "UPDATE `links` SET `exec_order` = $exec_order_down WHERE `links`.`id` = $link_id";
-    mysqli_query($db, $query);
-    $query = "UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_down";
-    mysqli_query($db, $query);
+
+    $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order_down WHERE `links`.`id` = $link_id", $db);
+    $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_down", $db);
     header('location: index.php');
 }

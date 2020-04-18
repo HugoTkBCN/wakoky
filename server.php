@@ -7,13 +7,34 @@ $email    = "";
 $errors = array();
 $_SESSION['success'] = "";
 
-// connect to database
-$db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
-if (!$db) {
-	die("Connection failed: " . mysqli_connect_error());
+#################################################
+############  Connect to database  ##############
+#################################################
+
+function connect_to_databas()
+{
+    $db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
+    if (!$db) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    return ($db);
 }
 
-// REGISTER USER
+$db = connect_to_databas();
+
+#################################################
+############  Functions utils      ##############
+#################################################
+
+function exec_query($query, $db)
+{
+    return (mysqli_query($db, $query));
+}
+
+#################################################
+############     Register Iser     ##############
+#################################################
+
 if (isset($_POST['reg_user'])) {
 	// receive all input values from the form
 	$username = mysqli_real_escape_string($db, $_POST['username']);
@@ -22,41 +43,28 @@ if (isset($_POST['reg_user'])) {
 	$password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
 
 	// form validation: ensure that the form is correctly filled
-	if (empty($username)) {
+	if (empty($username))
 		array_push($errors, "Username is required");
-	}
-	if (empty($email)) {
+	if (empty($email))
 		array_push($errors, "Email is required");
-	}
-	if (empty($password_1)) {
+	if (empty($password_1))
 		array_push($errors, "Password is required");
-	}
 
-	//check if user used
-	$query = "SELECT * FROM users WHERE username='$username'";
-	$results = mysqli_query($db, $query);
-	if (mysqli_num_rows($results) == 1) {
+	$result = exec_query("SELECT * FROM users WHERE username='$username'", $db);
+	if (mysqli_num_rows($results) == 1)
 		array_push($errors, "Username used");
-	}
 
-	//check if mail used
-	$query = "SELECT * FROM users WHERE email='$email'";
-	$results = mysqli_query($db, $query);
-	if (mysqli_num_rows($results) == 1) {
+	$result = exec_query("SELECT * FROM users WHERE email='$email'", $db);
+	if (mysqli_num_rows($results) == 1)
 		array_push($errors, "Email used");
-	}
 
-	if ($password_1 != $password_2) {
+	if ($password_1 != $password_2)
 		array_push($errors, "The two passwords do not match");
-	}
 
-	// register user if there are no errors in the form
 	if (count($errors) == 0) {
 		$password = md5($password_1); //encrypt the password before saving in the database
-		$query = "INSERT INTO users (username, email, password) 
-					  VALUES('$username', '$email', '$password')";
-		mysqli_query($db, $query);
-
+		$result = exec_query("INSERT INTO users (username, email, password) 
+					  VALUES('$username', '$email', '$password')", $db);
 		$_SESSION['username'] = $username;
 		$_SESSION['success'] = "You are now logged in";
 		$_SESSION['actual_playlist'] = [];
@@ -64,32 +72,28 @@ if (isset($_POST['reg_user'])) {
 	}
 }
 
-// ... 
+#################################################
+############       Login User      ##############
+#################################################
 
-// LOGIN USER
 if (isset($_POST['login_user'])) {
 	$username = mysqli_real_escape_string($db, $_POST['username']);
 	$password = mysqli_real_escape_string($db, $_POST['password']);
 
-	if (empty($username)) {
+	if (empty($username))
 		array_push($errors, "Username is required");
-	}
-	if (empty($password)) {
+	if (empty($password))
 		array_push($errors, "Password is required");
-	}
 
 	if (count($errors) == 0) {
 		$password = md5($password);
-		$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-		$results = mysqli_query($db, $query);
-
+		$result = exec_query("SELECT * FROM users WHERE username='$username' AND password='$password'", $db);
 		if (mysqli_num_rows($results) == 1) {
 			$_SESSION['username'] = $username;
 			$_SESSION['success'] = "You are now logged in";
 			$_SESSION['actual_playlist'] = [];
 			header('location: index.php');
-		} else {
+		} else
 			array_push($errors, "Wrong username/password combination");
-		}
 	}
 }
