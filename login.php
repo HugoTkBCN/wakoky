@@ -1,4 +1,4 @@
-<?php include('server.php') ?>
+<?php include('server/server.php') ?>
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
 	</script>
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="popupHelp.js"></script>
+	<script type="text/javascript" src="scripts/popupHelp.js"></script>
 </head>
 
 <body>

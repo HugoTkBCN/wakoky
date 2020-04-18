@@ -23,12 +23,7 @@ if (isset($_GET['error'])) {
 	</script>
 <?php
 }
-
-$db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
-if (!$db) {
-	die("Connection failed: " . mysqli_connect_error());
-}
-include('serverPlaylist.php');
+include('server/serverPlaylist.php');
 if (isset($_COOKIE['playing'])) {
 	if ($_COOKIE['playing'] == '1' && $_COOKIE['loaded'] == '0')
 		reload_playlist();

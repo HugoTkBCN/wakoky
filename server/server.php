@@ -32,7 +32,7 @@ function exec_query($query, $db)
 }
 
 #################################################
-############     Register Iser     ##############
+############     Register User     ##############
 #################################################
 
 if (isset($_POST['reg_user'])) {
@@ -51,11 +51,11 @@ if (isset($_POST['reg_user'])) {
 		array_push($errors, "Password is required");
 
 	$result = exec_query("SELECT * FROM users WHERE username='$username'", $db);
-	if (mysqli_num_rows($results) == 1)
+	if (mysqli_num_rows($result) == 1)
 		array_push($errors, "Username used");
 
 	$result = exec_query("SELECT * FROM users WHERE email='$email'", $db);
-	if (mysqli_num_rows($results) == 1)
+	if (mysqli_num_rows($result) == 1)
 		array_push($errors, "Email used");
 
 	if ($password_1 != $password_2)
@@ -88,7 +88,7 @@ if (isset($_POST['login_user'])) {
 	if (count($errors) == 0) {
 		$password = md5($password);
 		$result = exec_query("SELECT * FROM users WHERE username='$username' AND password='$password'", $db);
-		if (mysqli_num_rows($results) == 1) {
+		if (mysqli_num_rows($result) == 1) {
 			$_SESSION['username'] = $username;
 			$_SESSION['success'] = "You are now logged in";
 			$_SESSION['actual_playlist'] = [];
