@@ -1,15 +1,15 @@
 <div class="page">
-    <div>
-        <?php if (isset($_SESSION['success'])) :
-            include("header.php") ?>
-    </div>
-    <div class="content">
-        <div class="playlists">
-            <?php include('content.php'); ?>
+    <?php if (isset($_SESSION['success'])) : ?>
+        <div class="header">
+            <?php include("header.php") ?>
         </div>
-    </div>
-    <div>
-        <?php include("footer.php"); ?>
-    </div>
-<?php endif ?>
+        <div class="content">
+            <div class="playlists">
+                <?php include('content.php'); ?>
+            </div>
+        </div>
+        <div class="footer" id="myFooter">
+            <?php include("footer.php"); ?>
+        </div>
+    <?php endif ?>
 </div>
