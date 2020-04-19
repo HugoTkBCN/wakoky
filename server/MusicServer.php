@@ -1,11 +1,9 @@
 <?php
-session_start();
-
 #################################################
 ############  Connect to database  ##############
 #################################################
 
-function connect_to_databas()
+function connect_to_database()
 {
     $db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
     if (!$db) {
@@ -14,32 +12,34 @@ function connect_to_databas()
     return ($db);
 }
 
-$db = connect_to_databas();
+$db = connect_to_database();
 
 #################################################
 ############   Utils Function  ##################
 #################################################
 
+function exec_query($query, $db)
+{
+    return (mysqli_query($db, $query));
+}
+
 function reload_playlist()
 {
-    $db = connect_to_databas();
+    $db = connect_to_database();
     $playlist_id = $_COOKIE['playlist_id'];
     $link_id = $_COOKIE['link_id'];
 
-    $query = "SELECT * FROM links WHERE id='$link_id'";
-    $result = mysqli_query($db, $query);
+    $result = exec_query("SELECT * FROM links WHERE id='$link_id'", $db);
     $row = mysqli_fetch_assoc($result);
     $exec_order = $row['exec_order'];
     $tmp = [];
     $tmp[0] = $link_id;
 
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC";
-    $result = mysqli_query($db, $query);
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order > $exec_order ORDER BY exec_order ASC", $db);
     for ($i = 1; $row = mysqli_fetch_assoc($result); $i++) {
         $tmp[$i] = $row["id"];
     };
-    $query = "SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC";
-    $result = mysqli_query($db, $query);
+    $result = exec_query("SELECT * FROM links WHERE playlist_id='$playlist_id' AND id not in ($link_id) AND exec_order < $exec_order ORDER BY exec_order ASC", $db);
     for ($i = $i; $row = mysqli_fetch_assoc($result); $i++) {
         $tmp[$i] = $row["id"];
     };
@@ -79,11 +79,6 @@ function unset_cookie($name)
 {
     unset($_COOKIE[$name]);
     setcookie($name, '', time() - 4200, '/');
-}
-
-function exec_query($query, $db)
-{
-    return (mysqli_query($db, $query));
 }
 
 #################################################

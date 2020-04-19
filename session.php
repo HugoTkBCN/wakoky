@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <div class="page">
     <?php if (isset($_SESSION['success'])) :
         include("header.php") ?>

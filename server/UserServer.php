@@ -11,16 +11,16 @@ $_SESSION['success'] = "";
 ############  Connect to database  ##############
 #################################################
 
-function connect_to_databas()
+function connect_to_database()
 {
-    $db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
-    if (!$db) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-    return ($db);
+	$db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
+	if (!$db) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	return ($db);
 }
 
-$db = connect_to_databas();
+$db = connect_to_database();
 
 #################################################
 ############  Functions utils      ##############
@@ -28,7 +28,7 @@ $db = connect_to_databas();
 
 function exec_query($query, $db)
 {
-    return (mysqli_query($db, $query));
+	return (mysqli_query($db, $query));
 }
 
 #################################################
@@ -65,6 +65,11 @@ if (isset($_POST['reg_user'])) {
 		$password = md5($password_1); //encrypt the password before saving in the database
 		$result = exec_query("INSERT INTO users (username, email, password) 
 					  VALUES('$username', '$email', '$password')", $db);
+		$result = exec_query("SELECT id FROM users WHERE username='$username'", $db);
+		if (mysqli_num_rows($result) > 0) {
+			$row = mysqli_fetch_assoc($result);
+			$_SESSION['user_id'] = $row["id"];
+		}
 		$_SESSION['username'] = $username;
 		$_SESSION['success'] = "You are now logged in";
 		$_SESSION['actual_playlist'] = [];
@@ -90,6 +95,8 @@ if (isset($_POST['login_user'])) {
 		$result = exec_query("SELECT * FROM users WHERE username='$username' AND password='$password'", $db);
 		if (mysqli_num_rows($result) == 1) {
 			$_SESSION['username'] = $username;
+			$row = mysqli_fetch_assoc($result);
+			$_SESSION['user_id'] = $row["id"];
 			$_SESSION['success'] = "You are now logged in";
 			$_SESSION['actual_playlist'] = [];
 			header('location: index.php');

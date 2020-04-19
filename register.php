@@ -4,7 +4,7 @@
 <html>
 
 <head>
-	<title>Wakoky Sign In</title>
+	<title>Sign Up</title>
 	<link rel="stylesheet" type="text/css" href="style/register.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
 	<!-- Global site tag (gtag.js) - Google Analytics -->

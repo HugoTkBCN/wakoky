@@ -1,34 +1,11 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username'])) {
-	$_SESSION['msg'] = "You must log in first";
-	header('location: login.php');
-}
-
-if (isset($_GET['logout'])) {
-	session_destroy();
-	unset($_SESSION['username']);
-	foreach ($_COOKIE as $cookie_name => $cookie_value) {
-		unset($_COOKIE[$cookie_name]);
-		setcookie($cookie_name, '', time() - 4200, '/');
-	}
-	header("location: login.php");
-}
-
-if (isset($_GET['error'])) {
-?>
-	<script>
-		alert("<?php echo htmlspecialchars($_GET['error'], ENT_QUOTES); ?>")
-	</script>
-<?php
-}
+ini_set('error_reporting', E_ALL); ////to remove
+ini_set('display_errors', true);
 
 include('server/MusicServer.php');
-if (isset($_COOKIE['playing'])) {
-	if ($_COOKIE['playing'] == '1' && $_COOKIE['loaded'] == '0')
-		reload_playlist();
-}
+include("checkSession.php");
 ?>
 
 <!DOCTYPE html>

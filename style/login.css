@@ -4,17 +4,6 @@
     box-sizing: border-box;
 }
 
-.error {
-    width: 92%;
-    margin: 1% auto;
-    padding: 10px;
-    border: 1px solid #a94442;
-    color: #a94442;
-    background: #f2dede;
-    border-radius: 5px;
-    text-align: left;
-}
-
 body, html, .login_form {
     height: 100%;
 }
@@ -147,24 +136,27 @@ form button:focus, form button:hover {
     text-decoration: underline;
 }
 
-/* Popup box BEGIN */
-.hover_bkgr_fricc{
-    background:rgba(0,0,0,.4);
-    cursor:pointer;
-    display:none;
-    height:100%;
-    position:fixed;
-    text-align:center;
-    top:01;
-    width:100%;
-    z-index:10000;
+/* Popup */
+
+.hover_bkgr_fricc {
+    background: rgba(0, 0, 0, .4);
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    top: 01;
+    width: 100%;
+    z-index: 10000;
 }
-.hover_bkgr_fricc .helper{
-    display:inline-block;
-    height:100%;
-    vertical-align:middle;
+
+.hover_bkgr_fricc .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 }
-.hover_bkgr_fricc > div {
+
+.hover_bkgr_fricc>div {
     background-color: #fff;
     box-shadow: 10px 10px 60px #555;
     display: inline-block;
@@ -177,6 +169,7 @@ form button:focus, form button:hover {
     border-radius: 8px;
     padding: 15px 5%;
 }
+
 .popupCloseButton {
     background-color: #fff;
     border: 3px solid #999;
@@ -194,9 +187,11 @@ form button:focus, form button:hover {
     height: 30px;
     text-align: center;
 }
+
 .popupCloseButton:hover {
     background-color: #ccc;
 }
+
 .trigger_popup_fricc {
     cursor: pointer;
     font-size: 20px;
@@ -206,4 +201,3 @@ form button:focus, form button:hover {
     color: white;
     text-decoration: underline;
 }
-/* Popup box BEGIN */

@@ -1,25 +1,10 @@
-*,
-*:before,
-*:after {
+*, *:before, *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
-.error {
-    width: 92%;
-    margin: 1% auto;
-    padding: 10px;
-    border: 1px solid #a94442;
-    color: #a94442;
-    background: #f2dede;
-    border-radius: 5px;
-    text-align: left;
-}
-
-body,
-html,
-.register_form {
+body, html, .register_form {
     height: 100%;
 }
 
@@ -125,8 +110,7 @@ form button {
     cursor: pointer;
 }
 
-form button:focus,
-form button:hover {
+form button:focus, form button:hover {
     background: #262626;
 }
 
@@ -140,7 +124,6 @@ form button:hover {
     color: white;
 }
 
-.sign_in a:focus,
-.sign_in a:hover {
+.sign_in a:focus, .sign_in a:hover {
     text-decoration: underline;
 }
