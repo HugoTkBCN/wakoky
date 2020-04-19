@@ -23,12 +23,14 @@ if (isset($_GET['error'])) {
 	</script>
 <?php
 }
-include('server/serverPlaylist.php');
+
+include('server/MusicServer.php');
 if (isset($_COOKIE['playing'])) {
 	if ($_COOKIE['playing'] == '1' && $_COOKIE['loaded'] == '0')
 		reload_playlist();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -57,7 +59,7 @@ if (isset($_COOKIE['playing'])) {
 <body>
 	<?php if (isset($_SESSION['success'])) : ?>
 		<div id="video-placeholder"></div>
-		<?php include('session_template.php'); ?>
+		<?php include('session.php'); ?>
 	<?php endif ?>
 	</div>
 </body>

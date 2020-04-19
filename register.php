@@ -1,4 +1,4 @@
-<?php include('server/server.php') ?>
+<?php include('server/UserServer.php') ?>
 
 <!DOCTYPE html>
 <html>
@@ -7,6 +7,18 @@
 	<title>Wakoky Sign In</title>
 	<link rel="stylesheet" type="text/css" href="style/register.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163901596-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-163901596-1');
+	</script>
 </head>
 
 <body>
@@ -30,8 +42,8 @@
 				<label for="password">Confirm Password</label>
 				<input class="password" required name="password_2" type="password" />
 				<div>
-				<button type="submit" name="reg_user">Sign Up</button>
-				<div class="sign_in"><a href="login.php">Already a member ?  Sign In Here</a></div>
+					<button type="submit" name="reg_user">Sign Up</button>
+					<div class="sign_in"><a href="login.php">Already a member ? Sign In Here</a></div>
 			</form>
 			</section>
 	</div>

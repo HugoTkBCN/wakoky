@@ -1,16 +1,15 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['username'])) {
-	$_SESSION['msg'] = "You must log in first";
-	header('location: login.php');
-}
 ?>
-<div>
 
-	<?php if (isset($_SESSION['username'])) : ?>
-		<div class="playlists">
-			<?php include('printPlaylists.php'); ?>
-		</div>
-	<?php endif ?>
+<div class="page">
+    <?php if (isset($_SESSION['success'])) :
+        include("header.php") ?>
+        <div class="content">
+            <div class="playlists">
+                <?php include('content.php'); ?>
+            </div>
+        </div>
+    <?php include("footer.php");
+    endif ?>
 </div>
