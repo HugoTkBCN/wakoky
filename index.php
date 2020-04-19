@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-ini_set('error_reporting', E_ALL); ////to remove
-ini_set('display_errors', true);
-
 include('server/MusicServer.php');
 include("checkSession.php");
 ?>
