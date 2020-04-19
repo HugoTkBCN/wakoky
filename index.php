@@ -13,8 +13,8 @@ include("checkSession.php");
 
 <head>
 	<title>Wakoky</title>
-	<link rel="stylesheet" type="text/css" href="style/style.css">
 	<link rel="stylesheet" type="text/css" href="style/session.css">
+	<link rel="stylesheet" type="text/css" href="style/content.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
