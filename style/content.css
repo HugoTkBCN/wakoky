@@ -119,6 +119,11 @@
     margin: 1px;
 }
 
+.music_title {
+    text-decoration: none;
+    color: white;
+}
+
 .remove_item {
     margin: 1%;
 }

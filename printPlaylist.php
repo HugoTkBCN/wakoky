@@ -35,13 +35,15 @@ function print_musics($playlist_id, $db)
                     <input id="play_pause_button_<?php echo $link_id; ?>" class="playLink" type="image" src="<?php echo get_button($link_id, 'link_id') ?>" width="20" height="20"></input>
                 </div>
             </form>
-            <p><?php
+            <a class="music_title" href="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>&play_music=1">
+                <?php
                 if (strlen($name) > 100) {
                     $name = substr($name, 0, 100);
                     $name .= "...";
                 }
                 echo "$name";
-                ?></p>
+                ?>
+            </a>
             <div class="option_link">
                 <?php print_options($playlist_id, $link_id); ?>
             </div>
