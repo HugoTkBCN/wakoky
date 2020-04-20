@@ -28,6 +28,8 @@ include("checkSession.php");
 
 		gtag('config', 'UA-163901596-1');
 	</script>
+	<!-- Pinterest -->
+	<meta name="p:domain_verify" content="c48adff9f6d32ff20cbfe87194d22afa" />
 </head>
 
 <body>
