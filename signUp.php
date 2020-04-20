@@ -5,7 +5,7 @@
 
 <head>
 	<title>Sign Up</title>
-	<link rel="stylesheet" type="text/css" href="style/register.css">
+	<link rel="stylesheet" type="text/css" href="style/signUp.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163901596-1"></script>
@@ -29,7 +29,7 @@
 				<img src="assets/logo.png" alt=""></a>
 			</div>
 
-			<form id="register" method="post" action="register.php">
+			<form id="register" method="post" action="signUp">
 				<?php include('errors.php'); ?>
 				<label for="username">User Name</label>
 				<input required name="username" type="text" autocapitalize="off" autocorrect="off" />
@@ -43,7 +43,7 @@
 				<input class="password" required name="password_2" type="password" />
 				<div>
 					<button type="submit" name="reg_user">Sign Up</button>
-					<div class="sign_in"><a href="login.php">Already a member ? Sign In Here</a></div>
+					<div class="sign_in"><a href="signIn">Already a member ? Sign In Here</a></div>
 			</form>
 			</section>
 	</div>

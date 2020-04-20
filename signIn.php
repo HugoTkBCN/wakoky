@@ -5,7 +5,7 @@
 
 <head>
 	<title>Sign in</title>
-	<link rel="stylesheet" type="text/css" href="style/login.css">
+	<link rel="stylesheet" type="text/css" href="style/signIn.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163901596-1"></script>
@@ -38,7 +38,7 @@
 				<div class="logo">
 					<img src="assets/logo.png" alt=""></a>
 				</div>
-				<form id="login" method="post" action="login.php">
+				<form id="login" method="post" action="signIn">
 					<?php include('errors.php'); ?>
 					<a class="trigger_popup_fricc">What is Wakoky ?</a>
 					<label for="username">User Name</label>
@@ -48,7 +48,7 @@
 					<input class="password" required name="password" type="password" />
 					<button type="submit" name="login_user">Sign In</button>
 					<div class="sign_up">
-						<a href="register.php">You don't have an account ? Sign Up Here</a>
+						<a href="signUp">You don't have an account ? Sign Up Here</a>
 					</div>
 				</form>
 				</section>

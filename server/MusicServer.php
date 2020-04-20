@@ -45,7 +45,7 @@ function reload_playlist()
     };
     $link_id = $tmp[$_COOKIE['order'] - 1];
 ?>
-    <form method="post" action="index.php?reload=1&at_time=1&playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>" id="load">
+    <form method="post" action="index?reload=1&at_time=1&playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>" id="load">
         <input type="hidden" name="play_music"></input>
     </form>
     <script type="text/javascript">
@@ -95,16 +95,17 @@ if (isset($_POST['add_playlist'])) {
         $user_id = $row["id"];
     }
     if (empty($name))
-        header('location: index.php?error=Name is required');
+        header('location: index?error=Name is required');
     else {
         $result = exec_query("SELECT * FROM playlists WHERE name='$name' AND user_id='$user_id'", $db);
         if (mysqli_num_rows($result) == 1)
-            header('location: index.php?error=Name used');
+            header('location: index?error=Name used');
         else {
             $result = exec_query("INSERT INTO playlists (name, user_id) 
 					  VALUES('$name', '$user_id')", $db);
         }
     }
+    header('location: index');
 }
 
 #################################################
@@ -117,7 +118,7 @@ if (isset($_POST['add_link'])) {
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
 
     if (empty($link) || empty($playlist_id))
-        header('location: index.php?error=Link is required');
+        header('location: index?error=Link is required');
     else {
         $rx = '~
   ^(?:https?://)?                           # Optional protocol
@@ -126,7 +127,7 @@ if (isset($_POST['add_link'])) {
    ([^&]{11})                               # Video id of 11 characters as capture group 1
     ~x';
         if (!preg_match($rx, $link, $match))
-            header('location: index.php?error=Bad Link');
+            header('location: index?error=Bad Link');
         else {
             $video_id = get_id($link);
             if (empty($video_id)) {
@@ -144,9 +145,9 @@ if (isset($_POST['add_link'])) {
                     $exec_order = $row['exec_order'] + 1;
             }
             $result = exec_query("INSERT INTO links (link, playlist_id, name, exec_order) VALUES('$video_id', '$playlist_id', '$title', '$exec_order')", $db);
-            header('location: index.php');
         }
     }
+    header('location: index');
 }
 
 #################################################
@@ -183,7 +184,7 @@ if (isset($_GET['play_playlist']) || isset($_POST['play_playlist'])) {
             play_playlist($playlist_id, $db);
     } else
         play_playlist($playlist_id, $db);
-    header('location: index.php');
+    header('location: index');
 }
 
 #################################################
@@ -227,8 +228,8 @@ if (isset($_POST['play_music']) || isset($_GET['play_music'])) {
         } else
             play_music($link_id, $playlist_id, $db);
     } else
-        play_music($link_id, $playlist_id, $db); 
-    header('location: index.php');
+        play_music($link_id, $playlist_id, $db);
+    header('location: index');
 }
 
 #################################################
@@ -248,7 +249,7 @@ if (isset($_POST['remove_music'])) {
         $exec_order = $row['exec_order'] - 1;
         exec_query("UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id", $db);
     }
-    header('location: index.php');
+    header('location: index');
 }
 
 #################################################
@@ -259,7 +260,7 @@ if (isset($_POST['remove_playlist'])) {
     $playlist_id =  mysqli_real_escape_string($db, $_GET['playlistid']);
     $result = exec_query("DELETE FROM `links` WHERE `links`.`playlist_id` = $playlist_id", $db);
     $result = exec_query("DELETE FROM `playlists` WHERE `playlists`.`id` = $playlist_id", $db);
-    header('location: index.php');
+    header('location: index');
 }
 
 #################################################
@@ -281,7 +282,7 @@ if (isset($_POST['move_up'])) { // move music up in the playlist
 
     $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order_up WHERE `links`.`id` = $link_id", $db);
     $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_up", $db);
-    header('location: index.php');
+    header('location: index');
 }
 
 if (isset($_POST['move_down'])) { // move the music down in the playlist
@@ -299,5 +300,5 @@ if (isset($_POST['move_down'])) { // move the music down in the playlist
 
     $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order_down WHERE `links`.`id` = $link_id", $db);
     $result = exec_query("UPDATE `links` SET `exec_order` = $exec_order WHERE `links`.`id` = $id_down", $db);
-    header('location: index.php');
+    header('location: index');
 }
