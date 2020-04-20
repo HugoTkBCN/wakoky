@@ -34,9 +34,9 @@ $user_id = $_SESSION["user_id"];
             $playlist_id = $row_playlist["id"];
             $playlist_name = $row_playlist["name"]; ?>
             <div class="on_one_line">
-                <?php print_button("remove_item", "index?playlistid=$playlist_id", "remove_playlist", "20", "20", "removeLink", "assets/remove.png"); ?>
-                <a class="play_playlist" href="index?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
-                <?php print_button("", "index?playlistid=$playlist_id", "play_playlist", "30", "30", "", get_button($playlist_id, 'playlist_id')); ?>
+                <?php print_button("remove_item", "/?playlistid=$playlist_id", "remove_playlist", "20", "20", "removeLink", "assets/remove.png"); ?>
+                <a class="play_playlist" href="/?playlistid=<?php echo $playlist_id ?>&play_playlist=1"><strong><?php echo "$playlist_name"; ?></strong></a>
+                <?php print_button("", "/?playlistid=$playlist_id", "play_playlist", "30", "30", "", get_button($playlist_id, 'playlist_id')); ?>
             </div>
     <?php }
     } ?>
