@@ -30,6 +30,8 @@ include("checkSession.php");
 	</script>
 	<!-- Pinterest -->
 	<meta name="p:domain_verify" content="c48adff9f6d32ff20cbfe87194d22afa" />
+	<!-- Google adsense -->
+	<script data-ad-client="ca-pub-1653403322985348" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> 
 </head>
 
 <body>

@@ -7,6 +7,8 @@
 	<title>Sign in</title>
 	<link rel="stylesheet" type="text/css" href="style/signIn.css">
 	<link rel="icon" type="image/ico" href="assets/logo_zoom.png" />
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="scripts/popupHelp.js"></script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163901596-1"></script>
 	<script>
@@ -19,9 +21,10 @@
 
 		gtag('config', 'UA-163901596-1');
 	</script>
-
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="scripts/popupHelp.js"></script>
+	<!-- Pinterest -->
+	<meta name="p:domain_verify" content="c48adff9f6d32ff20cbfe87194d22afa" />
+	<!-- Google adsense -->
+	<script data-ad-client="ca-pub-1653403322985348" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> 
 </head>
 
 <body>
