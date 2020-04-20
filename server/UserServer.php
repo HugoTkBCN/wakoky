@@ -98,8 +98,9 @@ if (isset($_POST['login_user'])) {
 			$row = mysqli_fetch_assoc($result);
 			$_SESSION['user_id'] = $row["id"];
 			$_SESSION['success'] = "You are now logged in";
-			$_SESSION['actual_playlist'] = [];
-			header('location: index');
+			$_SESSION['actual_playlist'] = []; ?>
+			<script>console.log("ls");</script>
+			<?php header('location: index');
 		} else
 			array_push($errors, "Wrong username/password combination");
 	}
