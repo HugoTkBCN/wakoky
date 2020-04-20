@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include('server/MusicServer');
-include("checkSession");
+include('server/MusicServer.php');
+include("checkSession.php");
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ include("checkSession");
 <body>
 	<?php if (isset($_SESSION['success'])) : ?>
 		<div id="video-placeholder"></div>
-		<?php include('session'); ?>
+		<?php include('session.php'); ?>
 	<?php endif ?>
 	</div>
 </body>

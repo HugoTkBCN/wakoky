@@ -1,4 +1,4 @@
-<?php include('server/UserServer') ?>
+<?php include('server/UserServer.php') ?>
 
 <!DOCTYPE html>
 <html>
@@ -38,8 +38,8 @@
 				<div class="logo">
 					<img src="assets/logo.png" alt=""></a>
 				</div>
-				<form id="login" method="post" action="login">
-					<?php include('errors'); ?>
+				<form id="login" method="post" action="login.php">
+					<?php include('errors.php'); ?>
 					<a class="trigger_popup_fricc">What is Wakoky ?</a>
 					<label for="username">User Name</label>
 					<input required name="username" type="text" autocapitalize="off" autocorrect="off" />
@@ -48,7 +48,7 @@
 					<input class="password" required name="password" type="password" />
 					<button type="submit" name="login_user">Sign In</button>
 					<div class="sign_up">
-						<a href="register">You don't have an account ? Sign Up Here</a>
+						<a href="register.php">You don't have an account ? Sign Up Here</a>
 					</div>
 				</form>
 				</section>

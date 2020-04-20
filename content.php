@@ -10,10 +10,10 @@
         </div>
     </form>
     <div class="container_playlist_list">
-        <?php include('printListPlaylists'); ?>
+        <?php include('printListPlaylists.php'); ?>
     </div>
 </div>
 <?php
 if (isset($_COOKIE['playlist_id']))
-    include("printPlaylist");
+    include("printPlaylist.php");
 ?>

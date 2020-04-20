@@ -1,4 +1,4 @@
-<?php include('server/UserServer') ?>
+<?php include('server/UserServer.php') ?>
 
 <!DOCTYPE html>
 <html>
@@ -29,8 +29,8 @@
 				<img src="assets/logo.png" alt=""></a>
 			</div>
 
-			<form id="register" method="post" action="register">
-				<?php include('errors'); ?>
+			<form id="register" method="post" action="register.php">
+				<?php include('errors.php'); ?>
 				<label for="username">User Name</label>
 				<input required name="username" type="text" autocapitalize="off" autocorrect="off" />
 
@@ -43,7 +43,7 @@
 				<input class="password" required name="password_2" type="password" />
 				<div>
 					<button type="submit" name="reg_user">Sign Up</button>
-					<div class="sign_in"><a href="login">Already a member ? Sign In Here</a></div>
+					<div class="sign_in"><a href="login.php">Already a member ? Sign In Here</a></div>
 			</form>
 			</section>
 	</div>

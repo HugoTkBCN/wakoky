@@ -2,7 +2,7 @@
 
 function print_input_link($playlist_id)
 { ?>
-    <form class="on_one_line" method="post" action="index?playlistid=<?php echo $playlist_id ?>">
+    <form class="on_one_line" method="post" action="index.php?playlistid=<?php echo $playlist_id ?>">
         <input class="inputLink" type="test" name="link">
         <div class="add_item">
             <input type="hidden" name="add_link"></input>
@@ -14,9 +14,9 @@ function print_input_link($playlist_id)
 
 function print_options($playlist_id, $link_id)
 { ?>
-    <?php print_button("", "index?playlistid=$playlist_id&linkid=$link_id", "move_up", "15", "10", "moveUp", "assets/up.png"); ?>
-    <?php print_button("", "index?playlistid=$playlist_id&linkid=$link_id", "move_down", "15", "10", "moveDown", "assets/down.png"); ?>
-    <?php print_button("remove_item", "index?linkid=$link_id", "remove_music", "12", "12", "removeLink", "assets/remove.png"); ?>
+    <?php print_button("", "index.php?playlistid=$playlist_id&linkid=$link_id", "move_up", "15", "10", "moveUp", "assets/up.png"); ?>
+    <?php print_button("", "index.php?playlistid=$playlist_id&linkid=$link_id", "move_down", "15", "10", "moveDown", "assets/down.png"); ?>
+    <?php print_button("remove_item", "index.php?linkid=$link_id", "remove_music", "12", "12", "removeLink", "assets/remove.png"); ?>
     <?php
 }
 
@@ -29,13 +29,13 @@ function print_musics($playlist_id, $db)
         $name = $row_names['name'];
         $link_id = $row_names['id']; ?>
         <div class="on_one_line">
-            <form method="post" action="index?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
+            <form method="post" action="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>">
                 <div>
                     <input type="hidden" name="play_music"></input>
                     <input id="play_pause_button_<?php echo $link_id; ?>" class="playLink" type="image" src="<?php echo get_button($link_id, 'link_id') ?>" width="20" height="20"></input>
                 </div>
             </form>
-            <a class="music_title" href="index?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>&play_music=1">
+            <a class="music_title" href="index.php?playlistid=<?php echo $playlist_id ?>&linkid=<?php echo $link_id ?>&play_music=1">
                 <?php
                 if (strlen($name) > 100) {
                     $name = substr($name, 0, 100);
