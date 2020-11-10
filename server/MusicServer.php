@@ -56,7 +56,7 @@ function reload_playlist()
 
 function get_youtube_title($id)
 {
-    $api_key = "AIzaSyB96N_CX-mutJ1SdPcs8QoeoBz2YQJzieg";
+    $api_key = "[API_KEY]";
     $videoTitle = file_get_contents("https://www.googleapis.com/youtube/v3/videos?id=" . $id . "&key=$api_key&fields=items(id,snippet(title),statistics)&part=snippet,statistics");
     if ($videoTitle) {
         $json = json_decode($videoTitle, true);

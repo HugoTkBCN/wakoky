@@ -199,7 +199,7 @@ function accessCookie(cookieName) {
 }
 
 function setTitle(id) {
-    var api_key = "AIzaSyB96N_CX-mutJ1SdPcs8QoeoBz2YQJzieg";
+    var api_key = "[API_KEY]";
     $.getJSON("https://www.googleapis.com/youtube/v3/videos?part=id%2Csnippet&id=" + id + "&key=" + api_key, function (data) {
         var title = data.items[0].snippet.localized.title;
         if (title.length > 30)
