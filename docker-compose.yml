@@ -15,18 +15,6 @@ services:
       volumes:
         - ./mysql/db_data:/var/lib/mysql
         - ./wakoky.sql:/docker-entrypoint-initdb.d/wakoky.sql
-  phpmyadmin:
-    container_name: phpmyadmin
-    depends_on:
-      - database
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: mysql
-    links:
-      - database:mysql
-    ports:
-      - "5001:80"
-    restart: always 
   web:
     container_name: myserver
     build:
