@@ -39,7 +39,7 @@
 				<div class="logo">
 					<img src="assets/logo.png" alt=""></a>
 				</div>
-				<form id="login" method="post" action="signIn">
+				<form id="login" method="post" action="signIn.php">
 					<?php include('errors.php'); ?>
 					<a class="trigger_popup_fricc">What is Wakoky ?</a>
 					<label for="username">User Name</label>
@@ -49,7 +49,7 @@
 					<input class="password" required name="password" type="password" />
 					<button type="submit" name="login_user">Sign In</button>
 					<div class="sign_up">
-						<a href="signUp">You don't have an account ? Sign Up Here</a>
+						<a href="signUp.php">You don't have an account ? Sign Up Here</a>
 					</div>
 				</form>
 				</section>

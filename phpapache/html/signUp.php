@@ -29,7 +29,7 @@
 				<img src="assets/logo.png" alt=""></a>
 			</div>
 
-			<form id="register" method="post" action="signUp">
+			<form id="register" method="post" action="signUp.php">
 				<?php include('errors.php'); ?>
 				<label for="username">User Name</label>
 				<input required name="username" type="text" autocapitalize="off" autocorrect="off" />
@@ -43,7 +43,7 @@
 				<input class="password" required name="password_2" type="password" />
 				<div>
 					<button type="submit" name="reg_user">Sign Up</button>
-					<div class="sign_in"><a href="signIn">Already a member ? Sign In Here</a></div>
+					<div class="sign_in"><a href="signIn.php">Already a member ? Sign In Here</a></div>
 			</form>
 			</section>
 	</div>
