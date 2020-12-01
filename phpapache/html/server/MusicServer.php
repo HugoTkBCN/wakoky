@@ -5,7 +5,7 @@
 
 function connect_to_database()
 {
-    $db = mysqli_connect('localhost', 'root', '"K*d0e=A', 'wakoky');
+    $db = mysqli_connect('database', 'root', '12345678', 'wakoky');
     if (!$db) {
         die("Connection failed: " . mysqli_connect_error());
     }

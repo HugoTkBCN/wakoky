@@ -1,0 +1,45 @@
+version: '3' 
+services:   
+  database:
+      container_name: mysql
+      image: mysql:5.7
+      environment:
+        MYSQL_HOST: "localhost"
+        MYSQL_ROOT_PASSWORD: "12345678"
+        MYSQL_USER: "root"
+        MYSQL_PASSWORD: "12345678"
+        MYSQL_DATABASE: "wakoky"
+      ports:
+        - "3306:3306"
+      restart: unless-stopped
+      volumes:
+        - ./mysql/db_data:/var/lib/mysql
+        - ./wakoky.sql:/docker-entrypoint-initdb.d/wakoky.sql
+  phpmyadmin:
+    container_name: phpmyadmin
+    depends_on:
+      - database
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+    links:
+      - database:mysql
+    ports:
+      - "5001:80"
+    restart: always 
+  web:
+    container_name: myserver
+    build:
+      context: ./phpapache
+    volumes:
+      - ./certificates:/etc/apache2/ssl_keys
+      - ./phpapache/html:/var/www/html
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - database    
+    links:
+      - database
+    stdin_open: true
+    tty: true
