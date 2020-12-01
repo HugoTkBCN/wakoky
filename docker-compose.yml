@@ -29,5 +29,4 @@ services:
       - database    
     links:
       - database
-    stdin_open: true
     tty: true
